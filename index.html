@@ -1,507 +1,718 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noon Strategic Case Study</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg-dark: #070B14;
-            --noon-cyan: #00E5FF;
-            --noon-teal: #00D287;
-            --text-main: #FFFFFF;
-            --text-dim: #94A3B8;
-            --glass-bg: rgba(15, 23, 42, 0.4);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --card-hover: rgba(0, 229, 255, 0.05);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noon Case Study — Sultan Alqahtani</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══ BASE & VARIABLES ═══ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --g: #00C853;
+  --ga: #69F0AE;
+  --dark: #050D18;
+  --mid: #0C1A2E;
+  --surface: #111F35;
+  --white: #F5F5F0;
+  --muted: rgba(245,245,240,0.45);
+  --border: rgba(0,200,83,0.12);
+}
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--dark);
+  color: var(--white);
+  overflow-x: hidden;
+  cursor: none;
+}
 
-        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
+/* ═══ CURSOR (GPU Optimized) ═══ */
+.cursor {
+  width: 8px; height: 8px;
+  background: var(--g);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: exclusion;
+  will-change: transform;
+}
+.cursor-ring {
+  width: 32px; height: 32px;
+  border: 1px solid rgba(0,200,83,0.5);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  mix-blend-mode: exclusion;
+  will-change: transform;
+}
 
-        /* --- Ambient Cinematic Background --- */
-        .ambient-bg {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1; overflow: hidden; background: var(--bg-dark);
-        }
-        .orb {
-            position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.4;
-            animation: float 20s infinite ease-in-out alternate;
-        }
-        .orb-1 { width: 500px; height: 500px; background: var(--noon-cyan); top: -100px; left: -100px; }
-        .orb-2 { width: 600px; height: 600px; background: var(--noon-teal); bottom: -200px; right: -100px; animation-delay: -5s; }
-        
-        @keyframes float { 100% { transform: translate(100px, 50px) scale(1.1); } }
+/* ═══ UI ELEMENTS ═══ */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--g), var(--ga));
+  z-index: 1000;
+  width: 0%;
+  will-change: width;
+}
 
-        /* --- Layout & Utilities --- */
-        .container { max-width: 1000px; margin: 0 auto; padding: 80px 24px; position: relative; }
-        
-        .highlight-cyan { color: var(--noon-cyan); }
-        .highlight-teal { color: var(--noon-teal); }
-        .tagline {
-            font-family: 'Outfit', sans-serif; font-weight: 600; letter-spacing: 2px;
-            text-transform: uppercase; color: var(--text-dim); margin-bottom: 16px; font-size: 0.85rem;
-        }
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 24px 6vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(5,13,24,0.95) 0%, transparent 100%);
+  backdrop-filter: blur(8px);
+}
+.nav-logo {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: var(--g);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  font-size: 11px; font-weight: 500; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--muted); text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--white); }
 
-        /* --- Premium Glass Cards --- */
-        .glass-card {
-            background: var(--glass-bg); border: 1px solid var(--glass-border);
-            border-radius: 24px; padding: 48px; backdrop-filter: blur(20px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            margin-bottom: 40px; transition: transform 0.4s ease, border-color 0.4s ease;
-        }
-        .glass-card:hover { border-color: rgba(0, 229, 255, 0.2); transform: translateY(-4px); }
+/* ═══ HERO ═══ */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: 120px 6vw 80px;
+  position: relative;
+  overflow: hidden;
+}
 
-        /* --- Hero Section --- */
-        .hero { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
-        .hero-title { font-size: 4.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 40px; letter-spacing: -1px; }
-        
-        .content-group { margin-bottom: 32px; }
-        .content-group h3 { font-size: 1.3rem; margin-bottom: 12px; font-weight: 600; color: var(--text-main); }
-        .content-group p, .content-group li { font-size: 1.1rem; color: var(--text-dim); margin-bottom: 8px; }
-        .content-group ul { list-style: none; padding-left: 0; }
-        .content-group li { position: relative; padding-left: 24px; }
-        .content-group li::before { content: '•'; position: absolute; left: 0; color: var(--noon-cyan); font-size: 1.5rem; line-height: 1; top: -2px; }
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 60% 20%, rgba(0,200,83,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 10% 80%, rgba(0,200,83,0.04) 0%, transparent 50%);
+}
 
-        /* --- North Star --- */
-        .formula-display {
-            background: rgba(0,0,0,0.3); border: 1px solid var(--noon-teal);
-            padding: 32px; border-radius: 16px; text-align: center; margin: 32px 0;
-        }
-        .formula-text { font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--noon-teal); }
+.hero-grid-overlay {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,200,83,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,200,83,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
 
-        /* --- Archetypes Hub (The Elegant Interactivity) --- */
-        .hub-title { font-size: 3rem; font-weight: 800; margin-bottom: 40px; text-align: center; }
-        
-        .tab-controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
-        
-        .tab-btn {
-            background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border);
-            padding: 24px; border-radius: 16px; color: var(--text-dim);
-            font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;
-            cursor: pointer; transition: all 0.3s ease; text-align: left;
-            display: flex; flex-direction: column; justify-content: center;
-        }
-        .tab-btn span { font-size: 0.85rem; font-weight: 400; font-family: 'Inter', sans-serif; margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .tab-btn:hover { background: var(--card-hover); border-color: rgba(0, 229, 255, 0.3); color: var(--text-main); }
-        .tab-btn.active { background: rgba(0, 229, 255, 0.1); border-color: var(--noon-cyan); color: var(--text-main); box-shadow: 0 0 20px rgba(0, 229, 255, 0.1); }
-        
-        .tab-btn[data-target="368"].active { background: rgba(0, 210, 135, 0.1); border-color: var(--noon-teal); box-shadow: 0 0 20px rgba(0, 210, 135, 0.1); }
+.hero-content {
+  position: relative; z-index: 2;
+  display: grid; grid-template-columns: 1fr 420px;
+  gap: 80px; align-items: end;
+}
 
-        /* Tab Content Area */
-        .tab-content { display: none; opacity: 0; transform: translateY(20px); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-        .tab-content.active { display: block; opacity: 1; transform: translateY(0); }
+.hero-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+.eyebrow-line { width: 40px; height: 1px; background: var(--g); }
+.eyebrow-text {
+  font-family: 'Space Mono', monospace; font-size: 11px;
+  color: var(--g); letter-spacing: 2px; text-transform: uppercase;
+}
 
-        .archetype-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 8px; }
-        .archetype-subtitle { color: var(--noon-cyan); font-family: 'Inter', sans-serif; font-size: 1.1rem; margin-bottom: 40px; display: block; }
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(48px, 8vw, 110px);
+  font-weight: 900; line-height: 0.95;
+  letter-spacing: -2px; margin-bottom: 32px;
+}
+.hero h1 .line-accent { display: block; color: var(--g); font-style: italic; font-weight: 300; }
+.hero h1 .line-normal { display: block; }
 
-        .action-box { background: rgba(255,255,255,0.02); border-left: 3px solid var(--noon-cyan); padding: 24px; border-radius: 0 16px 16px 0; margin-bottom: 16px; }
-        .action-box.teal { border-color: var(--noon-teal); }
-        .action-title { font-family: 'Outfit', sans-serif; font-weight: 600; color: var(--noon-cyan); font-size: 1.1rem; margin-bottom: 8px; display: block; }
-        .action-box.teal .action-title { color: var(--noon-teal); }
+.hero-desc {
+  font-size: 16px; color: var(--muted);
+  line-height: 1.8; max-width: 480px; margin-bottom: 48px;
+}
 
-        .bonus-note {
-            background: linear-gradient(90deg, rgba(0,229,255,0.05), transparent);
-            border: 1px dashed rgba(0,229,255,0.3); padding: 32px; border-radius: 16px; margin-top: 40px;
-        }
-        .bonus-note.teal { background: linear-gradient(90deg, rgba(0,210,135,0.05), transparent); border-color: rgba(0,210,135,0.3); }
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 12px;
+  border: 1px solid var(--border); padding: 16px 28px;
+  font-size: 12px; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--white);
+  text-decoration: none; position: relative; overflow: hidden;
+}
+.hero-cta::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--g); transform: translateX(-100%);
+  transition: transform 0.4s ease; z-index: -1;
+}
+.hero-cta:hover::before { transform: translateX(0); }
+.hero-cta:hover { color: var(--dark); border-color: var(--g); }
 
-        /* --- Guardrails --- */
-        .guard-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
-        .guard-card { background: rgba(255,255,255,0.02); padding: 40px; border-radius: 24px; border: 1px solid var(--glass-border); }
-        .guard-card h3 { color: var(--text-main); font-size: 1.5rem; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
-        
-        /* Smooth Reveal Class */
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-    </style>
+.hero-stats {
+  display: flex; flex-direction: column; gap: 1px;
+  border: 1px solid var(--border); background: var(--border); align-self: end;
+}
+.hero-stat { background: var(--mid); padding: 24px 28px; transition: background 0.3s; }
+.hero-stat:hover { background: var(--surface); }
+.stat-num { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700; color: var(--g); line-height: 1; margin-bottom: 4px; }
+.stat-label { font-size: 12px; color: var(--muted); letter-spacing: 0.5px; }
+
+.hero-ticker {
+  position: relative; z-index: 2; border-top: 1px solid var(--border);
+  padding-top: 32px; display: flex; gap: 48px; overflow: hidden;
+}
+.ticker-item {
+  font-family: 'Space Mono', monospace; font-size: 11px;
+  color: var(--muted); letter-spacing: 1px; white-space: nowrap;
+  display: flex; align-items: center; gap: 12px;
+}
+.ticker-item::before { content: '//'; color: var(--g); }
+
+/* ═══ COMMON SECTION STYLES ═══ */
+.section { padding: 120px 6vw; position: relative; }
+.section-label {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  color: var(--g); letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 48px; display: flex; align-items: center; gap: 16px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); max-width: 120px; }
+
+/* ═══ NORTH STAR SECTION ═══ */
+.north-star-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: var(--border); border: 1px solid var(--border);
+}
+.ns-panel { background: var(--mid); padding: 56px; }
+.ns-panel.dark { background: var(--dark); }
+
+.ns-heading {
+  font-family: 'Fraunces', serif; font-size: clamp(32px, 4vw, 52px);
+  font-weight: 700; line-height: 1.1; margin-bottom: 24px;
+}
+.ns-heading em { font-style: italic; color: var(--g); font-weight: 300; }
+.ns-body { font-size: 15px; color: var(--muted); line-height: 1.9; }
+
+.formula-display {
+  font-family: 'Fraunces', serif; font-size: clamp(22px, 3vw, 36px);
+  color: var(--white); line-height: 1.5; margin-bottom: 32px;
+  padding-bottom: 32px; border-bottom: 1px solid var(--border);
+}
+.formula-display .fraction { color: var(--g); font-style: italic; }
+.formula-sub { font-family: 'Space Mono', monospace; font-size: 13px; color: var(--muted); margin-bottom: 32px; }
+
+.why-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+.why-list li { display: grid; grid-template-columns: 20px 1fr; gap: 12px; font-size: 14px; color: var(--muted); line-height: 1.6; }
+.why-list li::before { content: '→'; color: var(--g); font-family: 'Space Mono', monospace; font-size: 12px; margin-top: 2px; }
+
+/* ═══ DIAGNOSIS SECTION (Optimized HTML/CSS) ═══ */
+.diagnosis-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+  background: var(--border); border: 1px solid var(--border);
+}
+.diag-card { padding: 48px 40px; }
+.diag-card.bg-mid { background: var(--mid); }
+.diag-card.bg-surface { background: var(--surface); }
+.diag-card.accent { border-left: 2px solid var(--g); }
+.diag-tag {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  letter-spacing: 2px; color: var(--g); text-transform: uppercase; margin-bottom: 16px;
+}
+.diag-text { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 300; font-style: italic; color: rgba(245,245,240,0.8); line-height: 1.6; }
+.diag-text.bold { font-weight: 700; font-style: normal; color: var(--white); }
+
+/* ═══ ARCHETYPES ═══ */
+.archetypes-section { padding: 120px 6vw; background: var(--dark); }
+
+.archetype {
+  display: grid; grid-template-columns: 280px 1fr; gap: 1px;
+  background: var(--border); border: 1px solid var(--border);
+  margin-bottom: 1px; position: relative; overflow: hidden;
+}
+
+.archetype-sidebar {
+  background: var(--mid); padding: 48px 40px; display: flex;
+  flex-direction: column; justify-content: space-between; transition: background 0.4s;
+}
+.archetype:hover .archetype-sidebar { background: var(--surface); }
+
+.archetype-index {
+  font-family: 'Fraunces', serif; font-size: 80px; font-weight: 900;
+  color: rgba(0,200,83,0.1); line-height: 1; margin-bottom: 16px; transition: color 0.4s;
+}
+.archetype:hover .archetype-index { color: rgba(0,200,83,0.2); }
+
+.archetype-type { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--g); margin-bottom: 8px; }
+.archetype-title { font-family: 'Fraunces', serif; font-size: clamp(20px, 2.5vw, 28px); font-weight: 700; line-height: 1.2; color: var(--white); margin-bottom: 16px; }
+.archetype-id { font-size: 12px; color: var(--muted); font-family: 'Space Mono', monospace; }
+
+.risk-badge {
+  display: inline-block; padding: 6px 14px; font-size: 10px;
+  font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  border: 1px solid; font-family: 'Space Mono', monospace; margin-top: 24px;
+}
+.risk-red { border-color: #FF5252; color: #FF5252; }
+.risk-green { border-color: var(--g); color: var(--g); }
+.risk-amber { border-color: #FFB300; color: #FFB300; }
+
+.archetype-main { background: var(--dark); padding: 48px; display: grid; grid-template-rows: 1fr auto auto; gap: 40px; }
+.three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+
+.col-head {
+  font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--g); margin-bottom: 16px;
+  padding-bottom: 12px; border-bottom: 1px solid var(--border);
+}
+
+.col-body { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.col-body li { font-size: 13px; color: var(--muted); line-height: 1.65; padding-left: 14px; position: relative; }
+.col-body li::before { content: ''; position: absolute; left: 0; top: 9px; width: 4px; height: 1px; background: var(--g); }
+
+.archetype-metrics-bar { display: flex; gap: 32px; padding-top: 24px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+.metric-chip { display: flex; flex-direction: column; gap: 4px; }
+.chip-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+.chip-value { font-size: 13px; font-weight: 600; color: var(--white); }
+
+.archetype-bonus-bar {
+  background: rgba(0,200,83,0.04); border: 1px solid rgba(0,200,83,0.1);
+  padding: 16px 20px; font-size: 12px; color: var(--muted);
+  line-height: 1.7; font-style: italic;
+}
+.archetype-bonus-bar strong {
+  color: var(--g); font-style: normal; font-size: 10px;
+  font-family: 'Space Mono', monospace; letter-spacing: 1px; text-transform: uppercase;
+}
+
+/* INTERACTIVE ANIMATIONS */
+.archetype-main .three-col, .archetype-main .archetype-metrics-bar, .archetype-main .archetype-bonus-bar {
+  opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease;
+  will-change: opacity, transform;
+}
+.archetype.revealed .archetype-main .three-col, .archetype.revealed .archetype-main .archetype-metrics-bar, .archetype.revealed .archetype-main .archetype-bonus-bar {
+  opacity: 1; transform: translateY(0);
+}
+.archetype.revealed .archetype-main .archetype-metrics-bar { transition-delay: 0.1s; }
+.archetype.revealed .archetype-main .archetype-bonus-bar { transition-delay: 0.2s; }
+
+/* ═══ GUARDRAILS ═══ */
+.guardrails-section { padding: 120px 6vw; background: var(--mid); position: relative; overflow: hidden; }
+.guardrails-section::before {
+  content: 'GUARDRAILS'; position: absolute; top: 60px; right: 6vw;
+  font-family: 'Fraunces', serif; font-size: 15vw; font-weight: 900;
+  color: rgba(0,200,83,0.03); line-height: 1; pointer-events: none; user-select: none;
+}
+
+.guardrails-intro { max-width: 640px; margin-bottom: 64px; }
+.guardrails-intro p {
+  font-family: 'Fraunces', serif; font-size: clamp(22px, 3vw, 36px);
+  font-weight: 300; font-style: italic; line-height: 1.5; color: rgba(245,245,240,0.7);
+}
+.guardrails-intro p strong { font-weight: 700; font-style: normal; color: var(--white); }
+
+.guardrails-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); }
+.guardrail-item { background: var(--dark); padding: 40px; transition: background 0.3s; cursor: default; }
+.guardrail-item:hover { background: var(--surface); }
+
+.guardrail-num { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--g); letter-spacing: 2px; margin-bottom: 20px; }
+.guardrail-title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 16px; line-height: 1.3; }
+.guardrail-body { font-size: 13px; color: var(--muted); line-height: 1.9; }
+.guardrail-body strong { color: var(--ga); font-weight: 600; }
+
+/* ═══ FOOTER ═══ */
+footer {
+  padding: 64px 6vw; background: var(--dark); border-top: 1px solid var(--border);
+  display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 40px;
+}
+.footer-left h2 { font-family: 'Fraunces', serif; font-size: clamp(32px, 5vw, 64px); font-weight: 900; line-height: 1; margin-bottom: 16px; }
+.footer-left h2 em { font-style: italic; font-weight: 300; color: var(--g); }
+.footer-left p { font-size: 13px; color: var(--muted); }
+.footer-right { text-align: right; }
+.footer-right .name { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+.footer-right .meta { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+
+/* SCROLL ANIMATIONS */
+.fade-in {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  will-change: opacity, transform;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 900px) {
+  .hero-content { grid-template-columns: 1fr; gap: 40px; }
+  .hero-stats { display: none; }
+  .north-star-layout, .archetype, .three-col, .guardrails-grid, .diagnosis-grid { grid-template-columns: 1fr; }
+  .ns-panel, .diag-card, .archetype-main, .archetype-sidebar { padding: 32px 24px; }
+  footer { grid-template-columns: 1fr; }
+  footer .footer-right { text-align: left; }
+  .section, .hero, .archetypes-section, .guardrails-section { padding-left: 24px; padding-right: 24px; }
+}
+</style>
 </head>
 <body>
 
-    <div class="ambient-bg">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="progress-bar" id="progressBar"></div>
+
+<nav>
+  <div class="nav-logo">Sultan · Noon Case</div>
+  <ul class="nav-links">
+    <li><a href="#diagnosis">Diagnosis</a></li>
+    <li><a href="#archetypes">Archetypes</a></li>
+    <li><a href="#guardrails">Guardrails</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-overlay"></div>
+
+  <div class="hero-content">
+    <div>
+      <div class="hero-eyebrow">
+        <div class="eyebrow-line"></div>
+        <span class="eyebrow-text">Noon Academy · Data Case Study 2026</span>
+      </div>
+      <h1>
+        <span class="line-normal">Learning</span>
+        <span class="line-accent">gains exist.</span>
+        <span class="line-normal">But the</span>
+        <span class="line-normal">system leaks.</span>
+      </h1>
+      <p class="hero-desc">A diagnostic of 427 student journeys. What's working, what's fundamentally broken, and a Day-1 operations plan to drive step-change gains.</p>
+      <a href="#diagnosis" class="hero-cta">Read the diagnosis <span>↓</span></a>
     </div>
 
-    <div class="container">
-        
-        <section class="hero reveal active">
-            <div class="tagline">Noon Case Study // By Sultan</div>
-            <h1 class="hero-title">What, Why, and <span class="highlight-cyan">Tomorrow</span></h1>
-            
-            <div class="glass-card">
-                <div class="content-group">
-                    <h3>What's happening:</h3>
-                    <p>Learning gains exist, but outcomes vary widely because the system doesn't reliably convert effort into mastery, and classroom execution varies.</p>
-                </div>
-                
-                <div class="content-group">
-                    <h3>Why: 3 recurring patterns explain most of the variance:</h3>
-                    <ul>
-                        <li><strong style="color: #fff;">Misguided Effort</strong> (high attempts, low accuracy, low gain) = High Churn Risk</li>
-                        <li><strong style="color: #fff;">High Potential / Low Structure Fit</strong> (high gain + attendance, low missions) = Retention Opportunity</li>
-                        <li><strong style="color: #fff;">Teacher Paradox</strong> (high engagement + trust, low mastery) = Brand Risk</li>
-                    </ul>
-                </div>
-
-                <div class="content-group" style="margin-bottom: 0;">
-                    <h3 class="highlight-teal">What we do tomorrow:</h3>
-                    <p style="color: #fff; font-weight: 500;">Build Detection + Adaptation loops that are simple, scalable, and move learning gains fast.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="reveal" style="margin-top: 80px;">
-            <div class="tagline">Core Metric</div>
-            <h2 style="font-size: 3rem; font-weight: 800; margin-bottom: 32px;">The north star and how does it shine</h2>
-            
-            <div class="glass-card">
-                <p style="font-size: 1.2rem; color: var(--text-dim);">My North Star Metric is <strong style="color: #fff;">Learning Gain per Effort (LGpE)</strong>, ensuring every 'click' in Noon translates into real 'knowledge'.</p>
-                
-                <div class="formula-display">
-                    <div style="color: var(--text-dim); margin-bottom: 8px;">How to calculate:</div>
-                    <div class="formula-text">LGpE = (EOC - Diagnostic) / Effort</div>
-                    <div style="color: var(--text-dim); margin-top: 16px;">Effort = (Attempts% + Missions%) <br> <span style="font-size: 0.9rem;">Note: All values normalized</span></div>
-                </div>
-
-                <div class="content-group" style="margin-bottom: 0; margin-top: 40px;">
-                    <h3 class="highlight-teal">Why it matters?</h3>
-                    <ul>
-                        <li>Prevents busywork from looking like progress</li>
-                        <li>Highlights hidden churn risk (high effort, low ROI)</li>
-                        <li>Gives ops a clear intervention trigger</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section class="reveal" style="margin-top: 120px; min-height: 80vh;">
-            <div class="tagline">Behavioral Diagnostic</div>
-            <h2 class="hub-title">Archetype Interventions</h2>
-
-            <div class="tab-controls">
-                <button class="tab-btn active" data-target="649073">
-                    Student 649073
-                    <span style="color: var(--noon-cyan);">Misguided Effort</span>
-                </button>
-                <button class="tab-btn" data-target="647442">
-                    Student 647442
-                    <span style="color: var(--noon-cyan);">High Potential</span>
-                </button>
-                <button class="tab-btn" data-target="368">
-                    Teacher 368
-                    <span style="color: var(--noon-teal);">Teacher Paradox</span>
-                </button>
-            </div>
-
-            <div class="glass-card" style="padding: 60px;">
-                
-                <div class="tab-content active" id="content-649073">
-                    <h2 class="archetype-title">Misguided Effort Archetype</h2>
-                    <span class="archetype-subtitle">\ Student 649073</span>
-
-                    <div class="content-group">
-                        <h3>Data is saying:</h3>
-                        <ul>
-                            <li>Despite showing massive effort (5500+ attempts)</li>
-                            <li>Accuracy is stuck at ~25%, with weak academic growth (0.30 → 0.48).</li>
-                            <li>Trust in the platform remains high (0.85).</li>
-                        </ul>
-                    </div>
-
-                    <div class="content-group">
-                        <h3>What I see:</h3>
-                        <ul>
-                            <li>classic "Misguided Effort" archetype: student is showing high energy</li>
-                            <li>Trapped in a broken learning loop</li>
-                            <li>High trust here doesn’t guarantee mastery</li>
-                        </ul>
-                    </div>
-
-                    <div class="content-group">
-                        <h3>What I’ll do:</h3>
-                        <div class="action-box">
-                            <span class="action-title">1- Automated Triggered Alert (Fast, low-cost):</span>
-                            <ul>
-                                <li>Detection Rule: Flag any student with Attempts > 1000 & Accuracy < 40%</li>
-                                <li>Auto-categorize as “At Risk: Misguided Effort.”</li>
-                            </ul>
-                        </div>
-                        <div class="action-box">
-                            <span class="action-title">2- Teacher Visibility Layer:</span>
-                            <ul>
-                                <li>A simplified dashboard highlighting the Effort vs. Outcome mismatch</li>
-                                <li>Alert the teacher without adding significant operational load.</li>
-                            </ul>
-                        </div>
-                        <div class="action-box">
-                            <span class="action-title">3- Human Escalation (For extreme cases):</span>
-                            <ul>
-                                <li>If the status persists for 7 days</li>
-                                <li>Schedule a 15-minute session for struggling students</li>
-                                <li>Diagnose the error type</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="content-group">
-                        <h3>How I’ll measure it:</h3>
-                        <ul>
-                            <li>Increase Accuracy from 25% → 40% within 10–14 days.</li>
-                            <li>Reduce unproductive attempts by 30% (Quality over Quantity).</li>
-                            <li>Recalibrate Trust (Expectation vs Perception).</li>
-                        </ul>
-                    </div>
-
-                    <div class="bonus-note">
-                        <h3 style="color: var(--noon-cyan); margin-bottom: 12px;">Bonus Note (Psychological/Human):</h3>
-                        <ul style="color: var(--text-main); padding-left: 20px;">
-                            <li style="list-style: disc; padding-left:0;">It’s likely driven by Learning Helplessnes</li>
-                            <li style="list-style: disc; padding-left:0;">Parental Pressure (The Ambitious Father syndrome)</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="tab-content" id="content-647442">
-                    <h2 class="archetype-title">The High Potential Archetype</h2>
-                    <span class="archetype-subtitle">/ Student 647442</span>
-
-                    <div class="content-group">
-                        <h3>Data is saying:</h3>
-                        <ul>
-                            <li>Only 30% completion rate</li>
-                            <li>Achieved 70% growth + 95% attendance.</li>
-                            <li>Attendance suggests missions aren’t the value driver for this archetype</li>
-                            <li>Classroom Temp = 96%</li>
-                        </ul>
-                    </div>
-
-                    <div class="content-group">
-                        <h3>What I see:</h3>
-                        <ul>
-                            <li>The current task system (Missions) acts as Friction rather than Value for this student's level.</li>
-                            <li>"High Potential, Low Structure Fit" archetype.</li>
-                            <li>Enjoys other learning methods like: P2P, social interactions.</li>
-                        </ul>
-                    </div>
-
-                    <div class="content-group">
-                        <h3>What I’ll do:</h3>
-                        <div class="action-box">
-                            <span class="action-title">1- Lightweight Segmentation:</span>
-                            <ul>
-                                <li>Add 2–3 onboarding questions:<br>
-                                   - Do you prefer interactive or structured learning?<br>
-                                   - Do you prefer competition or individual achievement?</li>
-                                <li>Initial Classification: Explorative Learner vs. Structured Learner.</li>
-                            </ul>
-                        </div>
-                        <div class="action-box">
-                            <span class="action-title">2- Adaptive Experience (Low cost):</span>
-                            <ul>
-                                <li>Reduce/Increase mandatory tasks.</li>
-                                <li>Reduce/Increase Challenges and Peer Interaction.</li>
-                                <li>Disable/Enable Gamified Progression.</li>
-                            </ul>
-                        </div>
-                        <div class="action-box">
-                            <span class="action-title">3- Smart Completion Redefinition:</span>
-                            <ul>
-                                <li>Redefine “Completion” beyond just ticking off tasks.</li>
-                                <li>Measure it as: Engagement + Learning Outcomes.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="content-group">
-                        <h3>How I’ll measure it:</h3>
-                        <ul>
-                            <li>Raise Completion Rate from 30% → 50%.</li>
-                            <li>Maintain Growth > 50%.</li>
-                            <li>Increase Retention & Revenue (Proxy: Sustained attendance).</li>
-                        </ul>
-                    </div>
-
-                    <div class="bonus-note">
-                        <h3 style="color: var(--noon-cyan); margin-bottom: 12px;">Bonus Note (Psychological/Human):</h3>
-                        <ul style="color: var(--text-main); padding-left: 20px;">
-                            <li style="list-style: disc; padding-left:0;">Protégé Effect: learning efficacy increases when students explain/teach what they learn with their peers</li>
-                            <li style="list-style: disc; padding-left:0;">Cognitive Fit: students will boom in their preferred learning environment</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="tab-content" id="content-368">
-                    <h2 class="archetype-title" style="color: var(--noon-teal);">The Teacher Paradox</h2>
-                    <span class="archetype-subtitle" style="color: var(--noon-teal);">/ Teacher 368</span>
-
-                    <div class="content-group">
-                        <h3>Data is saying:</h3>
-                        <ul>
-                            <li>Extremely high engagement (95–99%)</li>
-                            <li>Exit Ticket scores are low (~58%).</li>
-                            <li>High Trust rates</li>
-                        </ul>
-                    </div>
-
-                    <div class="content-group">
-                        <h3>What I see:</h3>
-                        <ul>
-                            <li>"Entertainment Bias." The experience is enjoyable</li>
-                            <li>The learning remains superficial.</li>
-                            <li>Students are trusting the moment not the outcome</li>
-                        </ul>
-                    </div>
-
-                    <div class="content-group">
-                        <h3>What I’ll do:</h3>
-                        <div class="action-box teal">
-                            <span class="action-title">1- Rebalancing Incentives:</span>
-                            <ul>
-                                <li>Tie teacher evaluations to a combined score</li>
-                                <li>Engagement + Learning Outcomes. (One cannot exist without the other)</li>
-                            </ul>
-                        </div>
-                        <div class="action-box teal">
-                            <span class="action-title">2- Micro-Assessment Injection:</span>
-                            <ul>
-                                <li>Embed 2–3 checkpoints during the session instead of relying solely on the end.</li>
-                                <li>Simple “Best Achievers” scoreboard</li>
-                            </ul>
-                        </div>
-                        <div class="action-box teal">
-                            <span class="action-title">3- Exit Ticket Threshold:</span>
-                            <ul>
-                                <li>Set a minimum acceptable threshold at 70%.</li>
-                                <li>If scores fall below this: Trigger an automated review of the lesson material.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="content-group">
-                        <h3>How I’ll measure it:</h3>
-                        <ul>
-                            <li>Raise Exit Ticket scores from 58% → 70%+.</li>
-                            <li>Maintain Engagement above 85%.</li>
-                            <li>Compare trust to the outcome</li>
-                        </ul>
-                    </div>
-
-                    <div class="bonus-note teal">
-                        <h3 style="color: var(--noon-teal); margin-bottom: 12px;">Bonus Note (Psychological/Human):</h3>
-                        <ul style="color: var(--text-main); padding-left: 20px;">
-                            <li style="list-style: disc; padding-left:0;">Peak-End Rule: facilitator focus on the “Peak” with joy, but leaves the “End” with unexpected results.</li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <section class="reveal" style="margin-top: 120px; padding-bottom: 100px;">
-            <div class="tagline">System Integrity</div>
-            <h2 style="font-size: 3rem; font-weight: 800; margin-bottom: 16px;">Guardrails: Assumptions & Risk Mitigation</h2>
-            <p style="font-size: 1.2rem; color: var(--text-dim); margin-bottom: 48px;">Bold actions require sharp checks. My strategy assumes that data is the map, but the classroom is the terrain. We don’t just implement; we validate and pivot.</p>
-
-            <div class="guard-grid">
-                
-                <div class="guard-card">
-                    <h3><span style="color: var(--noon-cyan);">01.</span> The Data Validation Phase</h3>
-                    <p style="color: var(--text-dim); margin-bottom: 24px;">Before launching any automated trigger, we must validate the "Noise" in the current dataset:</p>
-                    <div class="content-group" style="margin-bottom:0;">
-                        <ul>
-                            <li><strong style="color: #fff;">Attempt Integrity:</strong> Do "Attempts" include "retries" or "rapid-guessing" loops? We must filter for Genuine Cognitive Effort before flagging a student.</li>
-                            <li><strong style="color: #fff;">Level Normalization:</strong> Difficulty isn't linear. A 25% accuracy in Advanced Math is different from 25% in Level 1 English. Triggers must be Dynamic, not static.</li>
-                            <li><strong style="color: #fff;">Metric Validity:</strong> Is "Trust" a leading indicator of retention or a lagging indicator of comfort? We must correlate trust with LTV (Lifetime Value) before using it as a success proxy.</li>
-                            <li><strong style="color: #fff;">Student Segmentation:</strong> Onboarding questions are a starting point. Within 7 days, the system must Overwrite this classification based on Behavioral Data. We trust what the student does in the app more than what they say in the survey.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="guard-card">
-                    <h3><span style="color: var(--noon-cyan);">02.</span> Operational Assumptions</h3>
-                    <div class="content-group" style="margin-bottom:0;">
-                        <ul>
-                            <li><strong style="color: #fff;">The School Model:</strong> I assume School B represents our "Golden Standard" for execution. We use its benchmarks to audit School E’s friction points.</li>
-                            <li><strong style="color: #fff;">Tech Scalability:</strong> I assume the current stack can support Real-time Event Triggers (e.g., flagging a student *during* the session, not 24 hours later).</li>
-                            <li><strong style="color: #fff;">Facilitator Agency:</strong> I assume facilitators have the pedagogical training to act on the "Visibility Layer" data once provided.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="guard-card" style="border-left: 4px solid #f97316;">
-                    <h3><span style="color: #f97316;">03.</span> Risk Mitigation (Goodhart’s Law Defense)</h3>
-                    <p style="color: var(--text-dim); margin-bottom: 24px;">Every system designed to be measured is a system designed to be gamed. Here is how we protect Noon:</p>
-                    <div class="content-group" style="margin-bottom:0;">
-                        <ul>
-                            <li><strong style="color: #fff;">The Cobra Effect (Grade Inflation):</strong> To prevent teachers from "simplifying" Exit Tickets to boost their scores, we introduce Independent Spot-Checks.</li>
-                            <li><strong style="color: #fff;">The "Efficiency" Trap:</strong> To ensure the LGpE doesn't encourage "easy learning," we pair it with a Challenge Index. We want efficient mastery of *hard* concepts, not fast completion of *easy* ones.</li>
-                            <li><strong style="color: #fff;">Human Friction:</strong> Automated alerts can feel punitive. We frame interventions as "Support Sprints" to maintain the "Protocol of Calmness" and student trust.</li>
-                            <li><strong style="color: #fff;">1:1 Human Escalations:</strong> 1:1 sessions are a Day-1 Discovery Tool, not a long-term scaling strategy. We use these sessions to gather qualitative data on 'Why' students fail, which then feeds into our Automated Adaptive Engine (AI-Tutor) for 100x scalability.</li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="stat-num">427</div>
+        <div class="stat-label">Student journeys analyzed</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Archetypes explaining most variance</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-num">LGpE</div>
+        <div class="stat-label">The North Star metric</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-num">Day 1</div>
+        <div class="stat-label">Actionable operations plan</div>
+      </div>
     </div>
+  </div>
 
-    <script>
-        // Smooth reveal on scroll
-        const reveals = document.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        reveals.forEach(reveal => observer.observe(reveal));
+  <div class="hero-ticker">
+    <div class="ticker-item">What's happening</div>
+    <div class="ticker-item">Why it's happening</div>
+    <div class="ticker-item">What we do tomorrow</div>
+    <div class="ticker-item">427 students · 5 schools · 13 metrics</div>
+    <div class="ticker-item">North Star: Learning Gain per Effort</div>
+  </div>
+</section>
 
-        // Elegant Tab Switching Logic
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const tabContents = document.querySelectorAll('.tab-content');
+<section id="diagnosis" class="section" style="background: var(--mid);">
+  <div class="section-label">The North Star</div>
 
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active classes
-                tabBtns.forEach(b => b.classList.remove('active'));
-                tabContents.forEach(c => {
-                    c.style.opacity = '0';
-                    c.style.transform = 'translateY(20px)';
-                    setTimeout(() => c.classList.remove('active'), 300); // Wait for fade out
-                });
+  <div class="north-star-layout fade-in">
+    <div class="ns-panel dark">
+      <h2 class="ns-heading">Not all effort is <em>equal.</em></h2>
+      <p class="ns-body">The ultimate measure of student success in this dataset is whether effort converts to mastery. My North Star Metric is Learning Gain per Effort (LGpE), ensuring every click in Noon translates into real knowledge. Once I found this metric, every piece of analysis had to connect back to it. If a data point doesn't explain why LGpE is high or low, it gets dropped.</p>
+    </div>
+    <div class="ns-panel">
+      <div class="formula-display">
+        LGpE = <span class="fraction">(EOC − Diagnostic)</span> / Effort
+      </div>
+      <div class="formula-sub">where Effort = Attempts% + Missions% (all values normalized)</div>
+      <ul class="why-list">
+        <li>Prevents busywork from looking like progress</li>
+        <li>Highlights hidden churn risk (high effort, low ROI)</li>
+        <li>Gives ops a clear intervention trigger</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-                // Add active to clicked
-                btn.classList.add('active');
-                const targetId = `content-${btn.dataset.target}`;
-                const targetContent = document.getElementById(targetId);
-                
-                setTimeout(() => {
-                    targetContent.classList.add('active');
-                    // Small delay to ensure display:block applies before transition
-                    setTimeout(() => {
-                        targetContent.style.opacity = '1';
-                        targetContent.style.transform = 'translateY(0)';
-                    }, 50);
-                }, 300); // Start fade in after fade out
-            });
-        });
-    </script>
+<section class="section" style="background: var(--dark);">
+  <div class="section-label">Diagnosis</div>
+  <div class="diagnosis-grid fade-in">
+    <div class="diag-card bg-mid">
+      <div class="diag-tag">What's Happening</div>
+      <p class="diag-text">Learning gains exist, but outcomes vary widely because the system doesn't reliably convert effort into mastery, and classroom execution varies.</p>
+    </div>
+    <div class="diag-card bg-surface">
+      <div class="diag-tag">Why It's Happening</div>
+      <p class="diag-text">3 recurring patterns explain most of the variance: Misguided Effort, High Potential / Low Structure Fit, and the Teacher Paradox.</p>
+    </div>
+    <div class="diag-card bg-mid accent">
+      <div class="diag-tag">What We Do Tomorrow</div>
+      <p class="diag-text bold">Build Detection + Adaptation loops that are simple, scalable, and move learning gains fast.</p>
+    </div>
+  </div>
+</section>
+
+<section id="archetypes" class="archetypes-section">
+  <div class="section-label">The 3 Archetypes</div>
+
+  <div class="archetype fade-in" id="arch1">
+    <div class="archetype-sidebar">
+      <div>
+        <div class="archetype-index">01</div>
+        <div class="archetype-type">Pattern One</div>
+        <div class="archetype-title">Misguided Effort</div>
+        <div class="archetype-id">// Student 649073</div>
+      </div>
+      <div class="risk-badge risk-red">High Churn Risk</div>
+    </div>
+    <div class="archetype-main">
+      <div class="three-col">
+        <div>
+          <div class="col-head">The Data Says</div>
+          <ul class="col-body">
+            <li>Despite showing massive effort (5500+ attempts)</li>
+            <li>Accuracy is stuck at ~25%, with weak academic growth (0.30 to 0.48)</li>
+            <li>Trust in the platform remains high (0.85)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-head">What I See</div>
+          <ul class="col-body">
+            <li>Classic "Misguided Effort" archetype: student is showing high energy</li>
+            <li>Trapped in a broken learning loop</li>
+            <li>High trust here doesn't guarantee mastery</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-head">What I'll Do Tomorrow</div>
+          <ul class="col-body">
+            <li>Flag: Attempts &gt; 1000 and Accuracy &lt; 40%</li>
+            <li>Auto-categorize as "At Risk: Misguided Effort"</li>
+            <li>Teacher visibility layer highlighting the Effort vs. Outcome mismatch</li>
+            <li>If status persists 7 days: 15-minute diagnostic session</li>
+          </ul>
+        </div>
+      </div>
+      <div class="archetype-metrics-bar">
+        <div class="metric-chip"><span class="chip-label">Target</span><span class="chip-value">Accuracy 25% to 40% within 10-14 days</span></div>
+        <div class="metric-chip"><span class="chip-label">Secondary</span><span class="chip-value">Reduce unproductive attempts by 30%</span></div>
+        <div class="metric-chip"><span class="chip-label">Then</span><span class="chip-value">Recalibrate Trust (Expectation vs. Perception)</span></div>
+      </div>
+      <div class="archetype-bonus-bar">
+        <strong>Psychological Layer</strong> &nbsp; Likely driven by Learning Helplessness and Parental Pressure (The Ambitious Father Syndrome).
+      </div>
+    </div>
+  </div>
+
+  <div class="archetype fade-in" id="arch2">
+    <div class="archetype-sidebar">
+      <div>
+        <div class="archetype-index">02</div>
+        <div class="archetype-type">Pattern Two</div>
+        <div class="archetype-title">High Potential / Low Structure Fit</div>
+        <div class="archetype-id">// Student 647442</div>
+      </div>
+      <div class="risk-badge risk-green">Retention Opportunity</div>
+    </div>
+    <div class="archetype-main">
+      <div class="three-col">
+        <div>
+          <div class="col-head">The Data Says</div>
+          <ul class="col-body">
+            <li>Only 30% completion rate</li>
+            <li>Achieved 70% growth + 95% attendance</li>
+            <li>Attendance suggests missions aren't the value driver for this archetype</li>
+            <li>Classroom Temp = 96%</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-head">What I See</div>
+          <ul class="col-body">
+            <li>The current task system (Missions) acts as Friction rather than Value</li>
+            <li>"High Potential, Low Structure Fit" archetype</li>
+            <li>Enjoys other learning methods like P2P and social interactions</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-head">What I'll Do Tomorrow</div>
+          <ul class="col-body">
+            <li>Add 2-3 onboarding questions: Explorative vs. Structured Learner</li>
+            <li>Behavioral override within 7 days based on actual in-app data</li>
+            <li>Adaptive experience: reduce/increase tasks based on learning type</li>
+            <li>Redefine "Completion" as Engagement + Learning Outcomes</li>
+          </ul>
+        </div>
+      </div>
+      <div class="archetype-metrics-bar">
+        <div class="metric-chip"><span class="chip-label">Target</span><span class="chip-value">Completion Rate 30% to 50%</span></div>
+        <div class="metric-chip"><span class="chip-label">Maintain</span><span class="chip-value">Growth above 50%</span></div>
+        <div class="metric-chip"><span class="chip-label">Proxy</span><span class="chip-value">Sustained attendance = Retention + Revenue</span></div>
+      </div>
+      <div class="archetype-bonus-bar">
+        <strong>Psychological Layer</strong> &nbsp; Protege Effect: learning efficacy increases when students explain and teach what they learn with peers. Cognitive Fit: students will perform at their best in their preferred learning environment.
+      </div>
+    </div>
+  </div>
+
+  <div class="archetype fade-in" id="arch3">
+    <div class="archetype-sidebar">
+      <div>
+        <div class="archetype-index">03</div>
+        <div class="archetype-type">Pattern Three</div>
+        <div class="archetype-title">The Teacher Paradox</div>
+        <div class="archetype-id">// Teacher 368</div>
+      </div>
+      <div class="risk-badge risk-amber">Brand Risk</div>
+    </div>
+    <div class="archetype-main">
+      <div class="three-col">
+        <div>
+          <div class="col-head">The Data Says</div>
+          <ul class="col-body">
+            <li>Extremely high engagement (95-99%)</li>
+            <li>Exit Ticket scores are low (~58%)</li>
+            <li>High Trust rates throughout</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-head">What I See</div>
+          <ul class="col-body">
+            <li>"Entertainment Bias" — the experience is enjoyable</li>
+            <li>The learning remains superficial</li>
+            <li>Students are trusting the moment, not the outcome</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-head">What I'll Do Tomorrow</div>
+          <ul class="col-body">
+            <li>Tie teacher evaluations to Engagement + Learning Outcomes combined</li>
+            <li>Embed 2-3 checkpoints during the session, not just at the end</li>
+            <li>Exit Ticket threshold: 70% minimum</li>
+            <li>If below threshold: auto-trigger review of lesson material</li>
+          </ul>
+        </div>
+      </div>
+      <div class="archetype-metrics-bar">
+        <div class="metric-chip"><span class="chip-label">Target</span><span class="chip-value">Exit Tickets 58% to 70%+</span></div>
+        <div class="metric-chip"><span class="chip-label">Maintain</span><span class="chip-value">Engagement above 85%</span></div>
+        <div class="metric-chip"><span class="chip-label">Watch</span><span class="chip-value">Trust correlated to actual outcome</span></div>
+      </div>
+      <div class="archetype-bonus-bar">
+        <strong>Psychological Layer</strong> &nbsp; Peak-End Rule: the facilitator focuses on the "Peak" with joy, but leaves the "End" with unexpected results.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="guardrails" class="guardrails-section">
+  <div class="section-label">Risk Mitigation</div>
+  <div class="guardrails-intro fade-in">
+    <p><strong>Bold actions require sharp checks.</strong> My strategy assumes that data is the map, but the classroom is the terrain. We don't just implement — we validate and pivot.</p>
+  </div>
+
+  <div class="guardrails-grid fade-in">
+    <div class="guardrail-item">
+      <div class="guardrail-num">01 // Validation</div>
+      <div class="guardrail-title">Data Validation Phase</div>
+      <div class="guardrail-body">Before launching any automated trigger, validate the noise. <strong>Attempt Integrity</strong>: filter for genuine cognitive effort before flagging. <strong>Level Normalization</strong>: a 25% accuracy in Level 1 differs from Level 2 — triggers must be dynamic, not static. <strong>Metric Validity</strong>: correlate Trust with LTV before using it as a success proxy.</div>
+    </div>
+    <div class="guardrail-item">
+      <div class="guardrail-num">02 // Operations</div>
+      <div class="guardrail-title">Operational Assumptions</div>
+      <div class="guardrail-body"><strong>School B is the Golden Standard.</strong> It started with the weakest diagnostic (0.43) and achieved the highest learning gain (0.217) — not who ends highest, but who grows most from where they started. Tech stack must support <strong>real-time event triggers</strong>. Facilitators must have pedagogical training to act on visibility layer data.</div>
+    </div>
+    <div class="guardrail-item">
+      <div class="guardrail-num">03 // Integrity</div>
+      <div class="guardrail-title">Goodhart's Law Defense</div>
+      <div class="guardrail-body">Every system designed to be measured is designed to be gamed. <strong>Cobra Effect</strong>: prevent grade inflation via independent spot-checks. <strong>Efficiency Trap</strong>: pair LGpE with a Challenge Index — efficient mastery of hard concepts, not fast completion of easy ones. <strong>Human Friction</strong>: frame interventions as "Support Sprints," never punitive.</div>
+    </div>
+    <div class="guardrail-item">
+      <div class="guardrail-num">04 // Segmentation</div>
+      <div class="guardrail-title">Segmentation Integrity</div>
+      <div class="guardrail-body">Onboarding questions are a starting point only. Within <strong>7 days</strong>, the system overwrites classification based on behavioral data. We trust what the student does in the app more than what they say in a survey.</div>
+    </div>
+    <div class="guardrail-item">
+      <div class="guardrail-num">05 // Scalability</div>
+      <div class="guardrail-title">1:1 Sessions as Discovery</div>
+      <div class="guardrail-body">1:1 escalations are a <strong>Day-1 Discovery Tool</strong>, not a long-term scaling strategy. Qualitative data from these sessions feeds into an <strong>Automated Adaptive Engine</strong> for 100x scalability. Use them to understand why students fail, then remove the human bottleneck.</div>
+    </div>
+    <div class="guardrail-item" style="border-left: 2px solid var(--g);">
+      <div class="guardrail-num">06 // Benchmark</div>
+      <div class="guardrail-title">The School B Standard</div>
+      <div class="guardrail-body">School B started with the weakest baseline but produced the highest learning gain. <strong>This is the real story in the data.</strong> Not who ended highest, but who transformed the most. School B is the benchmark every other school should be audited against.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">
+    <h2>Learning that <em>moves.</em></h2>
+    <p style="color: var(--muted); font-size: 13px; margin-top: 8px;">Noon Academy Case Study · 2026</p>
+  </div>
+  <div class="footer-right">
+    <div class="name">Sultan Alqahtani</div>
+    <div class="meta">CCXP® · SultanFq.career@gmail.com</div>
+  </div>
+</footer>
+
+<script>
+// Hardware-Accelerated Custom Cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  // Use translate3d to force hardware acceleration (GPU)
+  cursor.style.transform = `translate3d(${mx - 4}px, ${my - 4}px, 0)`;
+});
+
+function animateRing() {
+  // Smooth linear interpolation (Lerp) for the ring
+  rx += (mx - rx) * 0.15;
+  ry += (my - ry) * 0.15;
+  ring.style.transform = `translate3d(${rx - 16}px, ${ry - 16}px, 0)`;
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+// Optimized Progress Bar
+window.addEventListener('scroll', () => {
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (window.scrollY / total) * 100;
+  document.getElementById('progressBar').style.width = `${progress}%`;
+}, { passive: true }); // Passive listener for better scroll performance
+
+// Scroll Reveal Observer
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      if (entry.target.classList.contains('archetype')) {
+        setTimeout(() => entry.target.classList.add('revealed'), 200);
+      }
+      // Stop observing once revealed to save CPU cycles
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+document.querySelectorAll('.fade-in, .archetype').forEach(el => observer.observe(el));
+</script>
+
 </body>
 </html>
+
 
