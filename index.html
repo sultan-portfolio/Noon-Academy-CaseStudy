@@ -3,421 +3,457 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noon CX Telemetry Canvas</title>
+    <title>Noon Telemetry | Strategic Canvas</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Notion Theme (Initial) */
-            --n-bg: #ffffff;
-            --n-text: #37352f;
-            --n-sub: #787774;
-            
-            /* Noon Telemetry Theme (After Initialization) */
-            --t-bg: #050b14; /* Deep Ocean/Dark Blue */
-            --t-surface: rgba(10, 20, 40, 0.7);
-            --t-cyan: #00d2ff; /* Noon Baby Blue/Cyan */
-            --t-green: #00e676; /* Sea Green */
-            --t-text: #e2e8f0;
-            --t-text-muted: #94a3b8;
-            --t-border: rgba(0, 210, 255, 0.2);
-            --glow: 0 0 15px rgba(0, 210, 255, 0.3);
+            --bg-deep: #020617; /* Deep midnight */
+            --noon-cyan: #00f2fe; /* Noon Baby Blue/Cyan */
+            --noon-teal: #10b981; /* Sea Green */
+            --alert-orange: #ff4500;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(15, 23, 42, 0.6);
+            --glass-border: rgba(0, 242, 254, 0.15);
+            --glow-cyan: 0 0 20px rgba(0, 242, 254, 0.3);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--n-bg);
-            color: var(--n-text);
-            overflow-x: hidden;
-        }
-
-        /* --- NOTION BAIT PHASE --- */
-        #notion-phase {
-            max-width: 800px;
-            margin: 100px auto;
-            padding: 40px;
-            min-height: 100vh;
-        }
-        .n-title { font-size: 40px; font-weight: 800; margin-bottom: 20px; }
-        .n-text { font-size: 18px; color: var(--n-sub); line-height: 1.6; margin-bottom: 30px; }
-        .init-btn {
-            background: #2383e2; color: white; border: none; padding: 12px 24px;
-            font-size: 16px; border-radius: 4px; cursor: pointer; font-weight: 600;
-        }
-        .init-btn:hover { background: #0056b3; }
-
-        /* --- TELEMETRY PHASE (GOD CODE) --- */
-        #telemetry-phase {
-            display: none;
-            background-color: var(--t-bg);
-            color: var(--t-text);
-            min-height: 100vh;
-            padding: 40px;
-            opacity: 0;
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(0, 210, 255, 0.05), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(0, 230, 118, 0.05), transparent 25%);
-        }
-
-        body.dark-mode {
-            background-color: var(--t-bg);
-        }
-
-        .container { max-width: 1200px; margin: 0 auto; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        .header { text-align: center; margin-bottom: 60px; }
-        .cyber-title {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--t-cyan);
-            font-size: 3rem;
-            text-shadow: var(--glow);
-            letter-spacing: -1px;
-            margin-bottom: 10px;
-        }
-        .mission-statement {
-            font-size: 1.2rem; color: var(--t-text-muted); max-width: 800px; margin: 0 auto;
-            border-left: 3px solid var(--t-cyan); padding-left: 15px; text-align: left;
+        body {
+            font-family: 'Inter', sans-serif; background-color: var(--bg-deep);
+            color: var(--text-main); overflow-x: hidden; line-height: 1.6;
         }
 
-        /* Glass Cards */
-        .glass-card {
-            background: var(--t-surface);
-            border: 1px solid var(--t-border);
-            border-radius: 12px;
-            padding: 30px;
-            backdrop-filter: blur(10px);
-            margin-bottom: 30px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        /* Canvas Background */
+        #p2p-network {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; opacity: 0.6;
         }
-        .glass-card:hover { border-color: var(--t-cyan); box-shadow: var(--glow); }
 
-        h2 { color: #fff; font-size: 1.8rem; margin-bottom: 20px; font-weight: 600; }
-        h3 { color: var(--t-cyan); font-size: 1.2rem; margin-top: 20px; margin-bottom: 10px; font-family: 'JetBrains Mono', monospace; }
-        p, li { line-height: 1.7; color: var(--t-text-muted); margin-bottom: 10px; }
-        ul { margin-left: 20px; }
-        strong { color: #fff; }
+        /* Typography & Layout */
+        .container { max-width: 1100px; margin: 0 auto; padding: 100px 20px; position: relative; }
+        
+        h1, h2, h3 { font-weight: 800; letter-spacing: -0.5px; }
+        .cyber-font { font-family: 'JetBrains Mono', monospace; }
+        .highlight { color: var(--noon-cyan); text-shadow: var(--glow-cyan); }
+        .text-green { color: var(--noon-teal); }
+        
+        /* Section 1: Hero & North Star */
+        .hero { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
+        .hero-title { font-size: 3.5rem; margin-bottom: 20px; line-height: 1.1; }
+        .hero-subtitle { font-size: 1.2rem; color: var(--text-muted); max-width: 700px; margin-bottom: 50px; }
+        
+        .north-star-box {
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            border-radius: 16px; padding: 40px; backdrop-filter: blur(12px);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            transform: translateY(30px); opacity: 0; animation: fadeUp 1s forwards 0.5s;
+        }
 
-        /* North Star Engine */
-        .formula-box {
-            background: rgba(0,0,0,0.5); border: 1px dashed var(--t-cyan);
-            padding: 20px; border-radius: 8px; font-family: 'JetBrains Mono', monospace;
-            text-align: center; color: var(--t-green); font-size: 1.5rem; margin: 20px 0;
+        .formula-display {
+            font-size: 2rem; color: var(--noon-teal); text-align: center;
+            margin: 30px 0; padding: 20px; background: rgba(0,0,0,0.4);
+            border-radius: 8px; border-left: 4px solid var(--noon-teal);
         }
-        .highlight-text { color: var(--t-cyan); font-weight: 600; }
 
-        /* Archetype Scanner */
-        .scanner-layout { display: grid; grid-template-columns: 300px 1fr; gap: 30px; }
-        .targets-list { display: flex; flex-direction: column; gap: 15px; }
-        .target-btn {
-            background: rgba(0,0,0,0.4); border: 1px solid var(--t-border); color: var(--t-text);
-            padding: 15px; border-radius: 8px; cursor: pointer; text-align: left;
-            font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; position: relative; overflow: hidden;
+        /* Section 2: Radar Nodes (The Cinematic Isolation) */
+        .radar-section { min-height: 100vh; padding-top: 100px; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        
+        .nodes-grid {
+            display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; transition: opacity 0.5s;
         }
-        .target-btn.active {
-            background: rgba(0, 210, 255, 0.1); border-color: var(--t-cyan); color: #fff;
-            box-shadow: inset 0 0 10px rgba(0, 210, 255, 0.2);
+        
+        .radar-node {
+            width: 200px; height: 200px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,242,254,0.1) 0%, transparent 70%);
+            border: 2px dashed var(--glass-border);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
         }
-        .target-btn::before {
-            content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 4px; background: transparent;
+        .radar-node::before {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            border-radius: 50%; box-shadow: 0 0 30px rgba(0,242,254,0); transition: all 0.4s;
         }
-        .target-btn.active::before { background: var(--t-cyan); }
-        .target-btn[data-target="368"].active::before { background: var(--t-green); }
+        .radar-node:hover { transform: scale(1.1); border-color: var(--noon-cyan); }
+        .radar-node:hover::before { box-shadow: var(--glow-cyan); animation: pulse 2s infinite; }
+        .radar-node .node-id { font-size: 1.5rem; color: #fff; font-weight: 800; margin-bottom: 5px;}
+        .radar-node .node-type { font-size: 0.8rem; color: var(--noon-cyan); font-family: 'JetBrains Mono'; text-align: center;}
 
-        .scan-content { display: none; animation: fadeIn 0.5s ease; }
-        .scan-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .bonus-note {
-            background: rgba(0, 230, 118, 0.05); border-left: 4px solid var(--t-green);
-            padding: 15px; margin-top: 25px; border-radius: 0 8px 8px 0;
+        /* Cinematic Panels */
+        .panels-container { display: none; }
+        .cinematic-panel {
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            border-radius: 16px; padding: 50px; backdrop-filter: blur(16px);
+            display: none; opacity: 0; transform: scale(0.95); transition: all 0.6s ease;
         }
-        .bonus-note h4 { color: var(--t-green); margin-bottom: 5px; font-family: 'JetBrains Mono', monospace; }
-
-        /* Guardrails Grid */
-        .guard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .guard-item {
-            background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1);
-            padding: 20px; border-radius: 8px; transition: transform 0.3s ease;
+        .cinematic-panel.active { display: block; opacity: 1; transform: scale(1); }
+        
+        .back-btn {
+            background: transparent; border: 1px solid var(--text-muted); color: var(--text-muted);
+            padding: 8px 16px; border-radius: 20px; cursor: pointer; margin-bottom: 30px;
+            font-family: 'JetBrains Mono'; transition: all 0.3s;
         }
-        .guard-item:hover { transform: translateY(-5px); border-color: var(--t-cyan); }
-        .guard-item h4 { color: var(--t-cyan); margin-bottom: 10px; }
+        .back-btn:hover { border-color: var(--noon-cyan); color: var(--noon-cyan); }
 
-        /* Glitch Effect Class */
-        .glitch-anim { animation: glitch 0.3s linear infinite; }
-        @keyframes glitch {
-            0% { transform: translate(0) }
-            20% { transform: translate(-2px, 2px) }
-            40% { transform: translate(-2px, -2px) }
-            60% { transform: translate(2px, 2px) }
-            80% { transform: translate(2px, -2px) }
-            100% { transform: translate(0) }
+        /* Staggered Text Animations */
+        .stagger-item { opacity: 0; transform: translateY(20px); }
+        .cinematic-panel.active .stagger-item { animation: fadeUp 0.6s forwards; }
+        .cinematic-panel.active .d-1 { animation-delay: 0.2s; }
+        .cinematic-panel.active .d-2 { animation-delay: 0.6s; }
+        .cinematic-panel.active .d-3 { animation-delay: 1.0s; }
+
+        .panel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 30px; }
+        
+        /* Action Badges */
+        .cyber-badge {
+            display: inline-flex; align-items: center; background: rgba(255, 69, 0, 0.1);
+            border: 1px solid var(--alert-orange); color: var(--alert-orange);
+            padding: 2px 10px; border-radius: 4px; font-size: 0.85rem;
+            font-family: 'JetBrains Mono'; margin-right: 8px; vertical-align: middle;
+            box-shadow: 0 0 10px rgba(255, 69, 0, 0.2);
         }
+        .badge-green { border-color: var(--noon-teal); color: var(--noon-teal); background: rgba(16, 185, 129, 0.1); box-shadow: 0 0 10px rgba(16, 185, 129, 0.2); }
+
+        /* Psychological Decode Button & Panel */
+        .decode-btn {
+            background: linear-gradient(90deg, rgba(0,242,254,0.1), transparent);
+            border: 1px solid var(--noon-cyan); color: var(--noon-cyan);
+            padding: 12px 24px; border-radius: 8px; cursor: pointer; width: 100%;
+            margin-top: 40px; font-family: 'JetBrains Mono'; font-weight: 600;
+            text-transform: uppercase; transition: all 0.3s; letter-spacing: 2px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .decode-btn:hover { background: var(--noon-cyan); color: var(--bg-deep); box-shadow: var(--glow-cyan); }
+        
+        .psych-panel {
+            max-height: 0; overflow: hidden; transition: max-height 0.6s cubic-bezier(0, 1, 0, 1);
+            background: rgba(0,0,0,0.5); border-radius: 0 0 8px 8px;
+        }
+        .psych-panel.open { max-height: 500px; border-top: 2px solid var(--noon-cyan); }
+        .psych-content { padding: 25px; color: var(--noon-cyan); font-family: 'JetBrains Mono'; font-size: 0.95rem; }
+
+        /* Guardrails */
+        .guard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 40px; }
+        .guard-card { background: rgba(0,0,0,0.3); border-left: 2px solid var(--text-muted); padding: 25px; transition: 0.3s; }
+        .guard-card:hover { border-color: var(--noon-cyan); background: var(--glass-bg); transform: translateX(10px); }
+
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.05); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
+
     </style>
 </head>
 <body>
 
-    <div id="notion-phase">
-        <div class="n-title">Strategic Case Study</div>
-        <div class="n-text">
-            <strong>Prepared by:</strong> CX / Success Lead Candidate<br>
-            <strong>Context:</strong> Noon Academy Data Case Study<br><br>
-            Please review the documented approach for Day-1 Operations.
-        </div>
-        <button class="init-btn" id="initBtn">Load Full Analysis</button>
-    </div>
+    <canvas id="p2p-network"></canvas>
 
-    <div id="telemetry-phase">
-        <div class="container">
+    <div class="container">
+        
+        <section class="hero">
+            <h1 class="hero-title">Data is the Map.<br><span class="highlight">The Classroom is the Terrain.</span></h1>
+            <p class="hero-subtitle">What's happening: Learning gains exist, but outcomes vary widely. Effort doesn't reliably convert into mastery. <br>Tomorrow's protocol: Build Detection & Adaptation loops that are simple, scalable, and move learning gains fast.</p>
             
-            <div class="header">
-                <h1 class="cyber-title">NOON_TELEMETRY_CANVAS // V1.0</h1>
-                <p class="mission-statement">
-                    <strong>What's happening:</strong> Learning gains exist, but outcomes vary widely because the system doesn't reliably convert effort into mastery, and classroom execution varies.<br><br>
-                    <strong>What we do tomorrow:</strong> Build Detection + Adaptation loops that are simple, scalable, and move learning gains fast. Data is the map, but the classroom is the terrain. This is how we win the terrain.
-                </p>
-            </div>
-
-            <div class="glass-card">
-                <h2>The North Star Metric & How it Shines</h2>
-                <p>My North Star Metric is <strong>Learning Gain per Effort (LGpE)</strong>, ensuring every 'click' in Noon translates into real 'knowledge'.</p>
-                <div class="formula-box" id="formulaBox">
-                    LGpE = (EOC - Diagnostic) / Effort
+            <div class="north-star-box">
+                <div class="cyber-font" style="color: var(--noon-teal); margin-bottom: 10px;">// INITIATING NORTH STAR METRIC</div>
+                <h2>Learning Gain per Effort (LGpE)</h2>
+                <p>Ensuring every 'click' in Noon translates into real 'knowledge'.</p>
+                <div class="formula-display">
+                    <span id="type-formula"></span>
                 </div>
-                <p style="text-align:center; font-family: 'JetBrains Mono'; font-size: 0.9rem;">Effort = (Attempts% + Missions%) | *All values normalized</p>
-                
-                <div style="display:flex; justify-content: space-around; margin-top:30px; text-align:left;">
-                    <div>
-                        <h3 style="margin-top:0;">Why it matters?</h3>
-                        <ul>
-                            <li>Prevents busywork from looking like progress</li>
-                            <li>Highlights hidden churn risk (high effort, low ROI)</li>
-                            <li>Gives ops a clear intervention trigger</li>
-                        </ul>
+                <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--glass-border); padding-top: 20px; margin-top: 20px;">
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Effort = (Attempts% + Missions%)<br>*All values normalized</div>
+                    <div style="text-align: right;">
+                        <strong>Why it matters:</strong><br>
+                        <span class="text-muted">Prevents busywork / Highlights churn risk / Clear ops trigger</span>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <h2 style="margin-top: 50px;">Live Behavioral Archetypes Scanner</h2>
-            <div class="scanner-layout">
-                
-                <div class="targets-list">
-                    <button class="target-btn active" data-target="649073">
-                        [ID: 649073]<br><span style="color:#A0AABF">Archetype: Misguided Effort</span>
-                    </button>
-                    <button class="target-btn" data-target="647442">
-                        [ID: 647442]<br><span style="color:#A0AABF">Archetype: High Potential</span>
-                    </button>
-                    <button class="target-btn" data-target="368">
-                        [ID: 368]<br><span style="color:#A0AABF">Archetype: Teacher Paradox</span>
-                    </button>
+        <section class="radar-section">
+            <div class="section-header">
+                <h2 style="font-size: 2.5rem;">Live Behavioral Radar</h2>
+                <p class="cyber-font highlight">SELECT TARGET TO INITIATE DIAGNOSTIC</p>
+            </div>
+
+            <div class="nodes-grid" id="radar-grid">
+                <div class="radar-node" onclick="openPanel('target-1')">
+                    <div class="node-id">649073</div>
+                    <div class="node-type">Misguided Effort</div>
                 </div>
+                <div class="radar-node" onclick="openPanel('target-2')">
+                    <div class="node-id">647442</div>
+                    <div class="node-type">High Potential</div>
+                </div>
+                <div class="radar-node" style="border-color: var(--noon-teal);" onclick="openPanel('target-3')">
+                    <div class="node-id">Teacher 368</div>
+                    <div class="node-type" style="color: var(--noon-teal)">Teacher Paradox</div>
+                </div>
+            </div>
 
-                <div class="glass-card" style="margin-bottom: 0;">
+            <div class="panels-container" id="panels-container">
+                
+                <div class="cinematic-panel" id="target-1">
+                    <button class="back-btn" onclick="closePanels()">← RETURN TO RADAR</button>
+                    <h2 style="font-size: 2rem; margin-bottom: 5px;">Target: 649073</h2>
+                    <div class="cyber-font highlight" style="margin-bottom: 30px;">[ARCHETYPE: MISGUIDED EFFORT]</div>
                     
-                    <div id="content-649073" class="scan-content active">
-                        <h2>Misguided Effort Archetype</h2>
-                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                            <div>
-                                <h3>Data is saying:</h3>
-                                <ul>
-                                    <li>Despite showing massive effort (5500+ attempts)</li>
-                                    <li>Accuracy is stuck at ~25%, with weak academic growth (0.30 → 0.48).</li>
-                                    <li>Trust in the platform remains high (0.85).</li>
-                                </ul>
-                                <h3>What I see:</h3>
-                                <ul>
-                                    <li>Classic "Misguided Effort" archetype: student is showing high energy</li>
-                                    <li>Trapped in a broken learning loop</li>
-                                    <li>High trust here doesn’t guarantee mastery</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h3>What I’ll do:</h3>
-                                <ul>
-                                    <li><strong>Automated Triggered Alert:</strong> Detection Rule: Flag any student with Attempts > 1000 & Accuracy < 40%. Auto-categorize as “At Risk”.</li>
-                                    <li><strong>Teacher Visibility Layer:</strong> Dashboard highlighting Effort vs. Outcome mismatch.</li>
-                                    <li><strong>Human Escalation:</strong> If persists 7 days, schedule 15-min diagnostic session.</li>
-                                </ul>
-                                <h3>How I’ll measure it:</h3>
-                                <ul>
-                                    <li>Increase Accuracy: 25% → 40% (10–14 days)</li>
-                                    <li>Reduce unproductive attempts by 30%</li>
-                                    <li>Recalibrate Trust</li>
-                                </ul>
-                            </div>
+                    <div class="panel-grid">
+                        <div class="stagger-item d-1">
+                            <h3 style="border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; margin-bottom: 15px;">The Reality Check</h3>
+                            <ul style="list-style: none;">
+                                <li style="margin-bottom: 10px;"><strong>Data:</strong> Massive effort (5500+ attempts), but accuracy stuck at ~25%. Weak growth (0.30 → 0.48). High platform trust (0.85).</li>
+                                <li><strong>What I see:</strong> Student is trapped in a broken learning loop. High trust here doesn’t guarantee mastery. High energy, low ROI.</li>
+                            </ul>
                         </div>
-                        <div class="bonus-note">
-                            <h4>[PSYCHOLOGICAL PROFILE]</h4>
-                            <p>Likely driven by <strong>Learned Helplessness</strong> or Parental Pressure (The Ambitious Father syndrome).</p>
+                        <div class="stagger-item d-2">
+                            <h3 style="border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; margin-bottom: 15px;">Day-1 Operations</h3>
+                            <ul style="list-style: none;">
+                                <li style="margin-bottom: 15px;"><span class="cyber-badge">⚡ RULE</span> <strong>Automated Triggered Alert:</strong> Flag Attempts > 1000 & Accuracy < 40%. Auto-categorize as "At Risk".</li>
+                                <li style="margin-bottom: 15px;"><span class="cyber-badge badge-green">👁️ UI</span> <strong>Visibility Layer:</strong> Simplified dashboard alerting the teacher without adding ops load.</li>
+                                <li><span class="cyber-badge">🛡️ ESCALATE</span> If persists for 7 days -> Schedule 15-min diagnostic session.</li>
+                            </ul>
                         </div>
                     </div>
-
-                    <div id="content-647442" class="scan-content">
-                        <h2>The High Potential Archetype</h2>
-                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                            <div>
-                                <h3>Data is saying:</h3>
-                                <ul>
-                                    <li>Only 30% completion rate</li>
-                                    <li>Achieved 70% growth + 95% attendance.</li>
-                                    <li>Attendance suggests missions aren’t the value driver. Classroom Temp = 96%</li>
-                                </ul>
-                                <h3>What I see:</h3>
-                                <ul>
-                                    <li>The current task system (Missions) acts as Friction rather than Value.</li>
-                                    <li>"High Potential, Low Structure Fit" archetype.</li>
-                                    <li>Enjoys P2P and social interactions.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h3>What I’ll do:</h3>
-                                <ul>
-                                    <li><strong>Lightweight Segmentation:</strong> Onboarding questions (Explorative vs. Structured).</li>
-                                    <li><strong>Adaptive Experience:</strong> Reduce/Increase mandatory tasks & Challenges based on type.</li>
-                                    <li><strong>Smart Completion:</strong> Redefine beyond ticking tasks (Engagement + Outcomes).</li>
-                                </ul>
-                                <h3>How I’ll measure it:</h3>
-                                <ul>
-                                    <li>Raise Completion: 30% → 50%</li>
-                                    <li>Maintain Growth > 50%</li>
-                                    <li>Increase Retention & Revenue (Proxy: Sustained attendance)</li>
-                                </ul>
+                    
+                    <div class="stagger-item d-3">
+                        <button class="decode-btn" onclick="togglePsych('psych-1')">
+                            <span>[DECODE PSYCHOLOGY]</span> <span>+</span>
+                        </button>
+                        <div class="psych-panel" id="psych-1">
+                            <div class="psych-content">
+                                <strong>// BEHAVIORAL ANALYSIS:</strong><br><br>
+                                This pattern is likely driven by <strong>Learned Helplessness</strong> or extreme Parental Pressure (The Ambitious Father syndrome). The student continues to click to simulate progress, satisfying external pressure without internalizing the knowledge.
                             </div>
                         </div>
-                        <div class="bonus-note">
-                            <h4>[PSYCHOLOGICAL PROFILE]</h4>
-                            <p><strong>Protégé Effect:</strong> learning efficacy increases when teaching peers. <strong>Cognitive Fit:</strong> students boom in their preferred environment.</p>
-                        </div>
-                    </div>
-
-                    <div id="content-368" class="scan-content">
-                        <h2>The Teacher Paradox</h2>
-                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                            <div>
-                                <h3>Data is saying:</h3>
-                                <ul>
-                                    <li>Extremely high engagement (95–99%)</li>
-                                    <li>Exit Ticket scores are low (~58%).</li>
-                                    <li>High Trust rates.</li>
-                                </ul>
-                                <h3>What I see:</h3>
-                                <ul>
-                                    <li>"Entertainment Bias." The experience is enjoyable.</li>
-                                    <li>The learning remains superficial.</li>
-                                    <li>Students are trusting the moment not the outcome.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h3>What I’ll do:</h3>
-                                <ul>
-                                    <li><strong>Rebalancing Incentives:</strong> Tie evaluations to Engagement + Outcomes.</li>
-                                    <li><strong>Micro-Assessment Injection:</strong> Embed 2–3 checkpoints during session. Simple scoreboard.</li>
-                                    <li><strong>Exit Ticket Threshold:</strong> Set minimum at 70%. If below, trigger review.</li>
-                                </ul>
-                                <h3>How I’ll measure it:</h3>
-                                <ul>
-                                    <li>Raise Exit Ticket scores: 58% → 70%+</li>
-                                    <li>Maintain Engagement > 85%</li>
-                                    <li>Compare trust to the outcome.</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="bonus-note">
-                            <h4>[PSYCHOLOGICAL PROFILE]</h4>
-                            <p><strong>Peak-End Rule:</strong> Facilitator focuses on the "Peak" with joy, but leaves the "End" with unexpected results.</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="glass-card" style="margin-top: 50px;">
-                <h2>Guardrails: Assumptions & Risk Mitigation</h2>
-                <p>Bold actions require sharp checks. Every system designed to be measured is a system designed to be gamed. Here is how we protect Noon:</p>
-                
-                <div class="guard-grid" style="margin-top: 30px;">
-                    <div class="guard-item">
-                        <h4>1. Data Validation Phase</h4>
-                        <p><strong>Attempt Integrity:</strong> Filter for Genuine Cognitive Effort before flagging. <br><strong>Level Normalization:</strong> Difficulty isn't linear. Triggers must be Dynamic.<br><strong>Metric Validity:</strong> Correlate trust with LTV.</p>
-                    </div>
-                    <div class="guard-item">
-                        <h4>2. Operational Assumptions</h4>
-                        <p><strong>The School Model:</strong> Assuming School B is the Golden Standard.<br><strong>Tech Scalability:</strong> Assuming stack supports Real-time Event Triggers.<br><strong>Facilitator Agency:</strong> Assuming training allows acting on Visibility Layer.</p>
-                    </div>
-                    <div class="guard-item">
-                        <h4>3. Anti-Gaming (Goodhart’s Law)</h4>
-                        <p><strong>The Cobra Effect:</strong> Independent Spot-Checks to prevent grade inflation.<br><strong>The Efficiency Trap:</strong> Pair LGpE with a Challenge Index.<br><strong>Human Friction:</strong> Frame interventions as "Support Sprints" to maintain calm protocol.</p>
                     </div>
                 </div>
-            </div>
 
-        </div>
+                <div class="cinematic-panel" id="target-2">
+                    <button class="back-btn" onclick="closePanels()">← RETURN TO RADAR</button>
+                    <h2 style="font-size: 2rem; margin-bottom: 5px;">Target: 647442</h2>
+                    <div class="cyber-font highlight" style="margin-bottom: 30px;">[ARCHETYPE: HIGH POTENTIAL / LOW STRUCTURE FIT]</div>
+                    
+                    <div class="panel-grid">
+                        <div class="stagger-item d-1">
+                            <h3 style="border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; margin-bottom: 15px;">The Reality Check</h3>
+                            <ul style="list-style: none;">
+                                <li style="margin-bottom: 10px;"><strong>Data:</strong> Only 30% completion rate, but achieved 70% growth + 95% attendance. Classroom Temp = 96%.</li>
+                                <li><strong>What I see:</strong> Current task system (Missions) acts as Friction, not Value. Student enjoys P2P and social interactions over structured tasks.</li>
+                            </ul>
+                        </div>
+                        <div class="stagger-item d-2">
+                            <h3 style="border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; margin-bottom: 15px;">Day-1 Operations</h3>
+                            <ul style="list-style: none;">
+                                <li style="margin-bottom: 15px;"><span class="cyber-badge">🎯 ONBOARD</span> <strong>Lightweight Segmentation:</strong> Add preference questions (Explorative vs. Structured).</li>
+                                <li style="margin-bottom: 15px;"><span class="cyber-badge badge-green">⚙️ ADAPT</span> <strong>Adaptive Experience:</strong> Reduce mandatory tasks, increase P2P Challenges based on segment.</li>
+                                <li><span class="cyber-badge">📊 METRIC</span> Redefine "Completion" beyond ticking tasks to Engagement + Outcomes.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="stagger-item d-3">
+                        <button class="decode-btn" onclick="togglePsych('psych-2')">
+                            <span>[DECODE PSYCHOLOGY]</span> <span>+</span>
+                        </button>
+                        <div class="psych-panel" id="psych-2">
+                            <div class="psych-content">
+                                <strong>// BEHAVIORAL ANALYSIS:</strong><br><br>
+                                <strong>Protégé Effect:</strong> Learning efficacy increases when students explain/teach what they learn to peers. <br><strong>Cognitive Fit:</strong> Students boom in their preferred environment. Forcing structured gamification on an explorative learner kills momentum.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cinematic-panel" id="target-3">
+                    <button class="back-btn" onclick="closePanels()">← RETURN TO RADAR</button>
+                    <h2 style="font-size: 2rem; margin-bottom: 5px; color: var(--noon-teal);">Teacher: 368</h2>
+                    <div class="cyber-font text-green" style="margin-bottom: 30px;">[ARCHETYPE: THE TEACHER PARADOX]</div>
+                    
+                    <div class="panel-grid">
+                        <div class="stagger-item d-1">
+                            <h3 style="border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; margin-bottom: 15px;">The Reality Check</h3>
+                            <ul style="list-style: none;">
+                                <li style="margin-bottom: 10px;"><strong>Data:</strong> Extremely high engagement (95–99%) & Trust, but Exit Ticket scores are low (~58%).</li>
+                                <li><strong>What I see:</strong> "Entertainment Bias". The experience is enjoyable, but learning remains superficial. Students trust the moment, not the outcome.</li>
+                            </ul>
+                        </div>
+                        <div class="stagger-item d-2">
+                            <h3 style="border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; margin-bottom: 15px;">Day-1 Operations</h3>
+                            <ul style="list-style: none;">
+                                <li style="margin-bottom: 15px;"><span class="cyber-badge" style="border-color:#ffd700; color:#ffd700;">⚖️ KPI</span> <strong>Rebalancing Incentives:</strong> Tie evaluations to Engagement + Outcomes combined.</li>
+                                <li style="margin-bottom: 15px;"><span class="cyber-badge badge-green">💉 INJECT</span> <strong>Micro-Assessments:</strong> Embed 2-3 checkpoints *during* session instead of just the end.</li>
+                                <li><span class="cyber-badge">🚨 THRESHOLD</span> Set Exit Ticket min at 70%. Below this triggers automated material review.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="stagger-item d-3">
+                        <button class="decode-btn" style="border-color: var(--noon-teal); color: var(--noon-teal);" onclick="togglePsych('psych-3')">
+                            <span>[DECODE PSYCHOLOGY]</span> <span>+</span>
+                        </button>
+                        <div class="psych-panel" id="psych-3" style="border-top-color: var(--noon-teal);">
+                            <div class="psych-content" style="color: var(--noon-teal);">
+                                <strong>// BEHAVIORAL ANALYSIS:</strong><br><br>
+                                <strong>The Peak-End Rule:</strong> Facilitators focus on creating a joyful "Peak" during the session, but neglect the cognitive closure at the "End", resulting in unexpected mastery failures despite high satisfaction.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section style="min-height: 80vh; padding-top: 100px;">
+            <h2 style="font-size: 2.5rem;">Guardrails & Anti-Gaming Protocols</h2>
+            <p class="text-muted">Bold actions require sharp checks. Every system designed to be measured is a system designed to be gamed.</p>
+            
+            <div class="guard-grid">
+                <div class="guard-card">
+                    <h3 class="highlight" style="margin-bottom: 10px;">01. Data Validation</h3>
+                    <p><strong>Attempt Integrity:</strong> Filter for Genuine Cognitive Effort before flagging.<br><strong>Level Normalization:</strong> Difficulty isn't linear. Triggers must be dynamic.<br><strong>Metric Validity:</strong> Correlate 'Trust' with LTV before using it as a proxy.</p>
+                </div>
+                <div class="guard-card">
+                    <h3 class="highlight" style="margin-bottom: 10px;">02. Operational Assumptions</h3>
+                    <p><strong>Tech Scalability:</strong> Stack must support Real-time Event Triggers.<br><strong>Facilitator Agency:</strong> Assumes teachers have pedagogical training to act on visibility data.<br><strong>School B:</strong> Used as the Golden Standard benchmark.</p>
+                </div>
+                <div class="guard-card" style="border-color: var(--alert-orange);">
+                    <h3 style="color: var(--alert-orange); margin-bottom: 10px;">03. Goodhart’s Law Defense</h3>
+                    <p><strong>The Cobra Effect:</strong> Independent Spot-Checks to prevent grade inflation.<br><strong>The Efficiency Trap:</strong> Pair LGpE with a Challenge Index (efficient mastery of hard concepts).<br><strong>Human Friction:</strong> Frame alerts as "Support Sprints" to maintain trust.</p>
+                </div>
+            </div>
+        </section>
+
     </div>
 
     <script>
-        // Phase Transition (Bait and Switch)
-        document.getElementById('initBtn').addEventListener('click', function() {
-            const btn = this;
-            btn.innerHTML = "INITIALIZING SYSTEM...";
-            btn.classList.add('glitch-anim');
-            
-            setTimeout(() => {
-                document.getElementById('notion-phase').style.display = 'none';
-                document.body.classList.add('dark-mode');
-                
-                const telemetry = document.getElementById('telemetry-phase');
-                telemetry.style.display = 'block';
-                
-                // Fade in effect
-                setTimeout(() => {
-                    telemetry.style.opacity = '1';
-                    typeFormula();
-                }, 100);
-            }, 800);
-        });
-
-        // Archetype Scanner Tab Logic
-        const buttons = document.querySelectorAll('.target-btn');
-        const contents = document.querySelectorAll('.scan-content');
-
-        buttons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active from all
-                buttons.forEach(b => b.classList.remove('active'));
-                contents.forEach(c => c.classList.remove('active'));
-                
-                // Add active to clicked
-                btn.classList.add('active');
-                const targetId = btn.getAttribute('data-target');
-                document.getElementById('content-' + targetId).classList.add('active');
-            });
-        });
-
-        // Typing effect for the North Star formula
-        function typeFormula() {
-            const el = document.getElementById('formulaBox');
+        // Typing Effect for North Star
+        window.addEventListener('load', () => {
             const text = "LGpE = (EOC - Diagnostic) / Effort";
-            el.innerHTML = "";
             let i = 0;
-            const speed = 50;
-            
-            function typeWriter() {
-                if (i < text.length) {
-                    el.innerHTML += text.charAt(i);
+            setTimeout(() => {
+                const interval = setInterval(() => {
+                    document.getElementById('type-formula').innerHTML += text.charAt(i);
                     i++;
-                    setTimeout(typeWriter, speed);
-                } else {
-                    el.style.boxShadow = "var(--glow)";
+                    if(i > text.length - 1) clearInterval(interval);
+                }, 50);
+            }, 1000);
+        });
+
+        // Cinematic Radar Logic
+        const grid = document.getElementById('radar-grid');
+        const container = document.getElementById('panels-container');
+        const panels = document.querySelectorAll('.cinematic-panel');
+
+        function openPanel(targetId) {
+            grid.style.opacity = '0';
+            setTimeout(() => {
+                grid.style.display = 'none';
+                container.style.display = 'block';
+                panels.forEach(p => p.classList.remove('active'));
+                const activePanel = document.getElementById(targetId);
+                activePanel.classList.add('active');
+            }, 500);
+        }
+
+        function closePanels() {
+            panels.forEach(p => p.classList.remove('active'));
+            setTimeout(() => {
+                container.style.display = 'none';
+                grid.style.display = 'flex';
+                setTimeout(() => grid.style.opacity = '1', 50);
+            }, 500);
+            // Close all psych panels
+            document.querySelectorAll('.psych-panel').forEach(p => p.classList.remove('open'));
+        }
+
+        // Toggle Psychology Panel
+        function togglePsych(id) {
+            const panel = document.getElementById(id);
+            panel.classList.toggle('open');
+        }
+
+        // Canvas P2P Network (The Background Matrix)
+        const canvas = document.getElementById('p2p-network');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+
+        let particlesArray = [];
+        const mouse = { x: null, y: null, radius: 150 };
+
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.x; mouse.y = event.y;
+        });
+
+        class Particle {
+            constructor(x, y, dx, dy, size) {
+                this.x = x; this.y = y;
+                this.dx = dx; this.dy = dy;
+                this.size = size;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = 'rgba(0, 242, 254, 0.5)';
+                ctx.fill();
+            }
+            update() {
+                if (this.x > canvas.width || this.x < 0) this.dx = -this.dx;
+                if (this.y > canvas.height || this.y < 0) this.dy = -this.dy;
+                this.x += this.dx; this.y += this.dy;
+                this.draw();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.width * canvas.height) / 15000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = Math.random() * 2;
+                let x = Math.random() * innerWidth;
+                let y = Math.random() * innerHeight;
+                let dx = (Math.random() - 0.5) * 1;
+                let dy = (Math.random() - 0.5) * 1;
+                particlesArray.push(new Particle(x, y, dx, dy, size));
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+            connect();
+        }
+
+        function connect() {
+            let opacityValue = 1;
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
+                                 + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                    if (distance < (canvas.width / 10) * (canvas.height / 10)) {
+                        opacityValue = 1 - (distance / 20000);
+                        ctx.strokeStyle = 'rgba(0, 242, 254,' + opacityValue * 0.2 + ')';
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
                 }
             }
-            setTimeout(typeWriter, 500);
         }
+        
+        window.addEventListener('resize', () => {
+            canvas.width = innerWidth; canvas.height = innerHeight; init();
+        });
+
+        init(); animate();
     </script>
 </body>
 </html>
+
