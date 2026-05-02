@@ -18,7 +18,7 @@ html { scroll-behavior: smooth; }
   --surface: #111F35;
   --white: #F5F5F0;
   --muted: rgba(245,245,240,0.45);
-  --border: rgba(0,200,83,0.15); /* Slightly more visible border */
+  --border: rgba(0,200,83,0.15);
 }
 
 body {
@@ -28,12 +28,12 @@ body {
   overflow-x: hidden;
 }
 
-/* ═══ AMBIENT GLOW ORBS (Made more visible) ═══ */
+/* ═══ AMBIENT GLOW ORBS ═══ */
 .ambient-bg {
   position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
 }
 .orb {
-  position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.35; /* Increased opacity and reduced blur for more visibility */
+  position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.35;
   animation: floatOrb 20s infinite alternate ease-in-out;
 }
 .orb-1 { width: 60vw; height: 60vw; background: var(--g); top: -20%; left: -10%; }
@@ -51,10 +51,10 @@ body {
   z-index: 1000; width: 0%; transition: width 0.1s linear;
 }
 
-/* ═══ NAV (Cleaned up, logo removed) ═══ */
+/* ═══ NAV ═══ */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  padding: 24px 6vw; display: flex; justify-content: flex-end; /* Align links to right */ align-items: center;
+  padding: 24px 6vw; display: flex; justify-content: flex-end; align-items: center;
   background: linear-gradient(180deg, rgba(5,13,24,0.95) 0%, transparent 100%);
   backdrop-filter: blur(8px);
 }
@@ -71,14 +71,12 @@ nav {
   min-height: 100vh; display: grid; grid-template-rows: 1fr auto;
   padding: 120px 6vw 80px; position: relative; overflow: hidden;
 }
-
 .hero-bg {
   position: absolute; inset: 0;
   background:
     radial-gradient(ellipse 80% 60% at 60% 20%, rgba(0,200,83,0.09) 0%, transparent 60%),
     radial-gradient(ellipse 60% 80% at 10% 80%, rgba(0,200,83,0.06) 0%, transparent 50%);
 }
-
 .hero-grid-overlay {
   position: absolute; inset: 0;
   background-image:
@@ -88,31 +86,26 @@ nav {
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
   -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
 }
-
 .hero-content {
   position: relative; z-index: 2; display: grid;
   grid-template-columns: 1fr 420px; gap: 80px; align-items: end;
 }
-
 .hero-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
 .eyebrow-line { width: 40px; height: 1px; background: var(--g); }
 .eyebrow-text {
   font-family: 'Space Mono', monospace; font-size: 11px;
   color: var(--g); letter-spacing: 2px; text-transform: uppercase;
 }
-
 .hero h1 {
   font-family: 'Fraunces', serif; font-size: clamp(52px, 8vw, 110px);
   font-weight: 900; line-height: 0.95; letter-spacing: -2px; margin-bottom: 32px;
 }
 .hero h1 .line-accent { display: block; color: var(--g); font-style: italic; font-weight: 300; }
 .hero h1 .line-normal { display: block; }
-
 .hero-desc {
   font-size: 16px; color: var(--muted); line-height: 1.8;
   max-width: 480px; margin-bottom: 48px;
 }
-
 .hero-cta {
   display: inline-flex; align-items: center; gap: 12px;
   border: 1px solid var(--border); padding: 16px 28px;
@@ -126,7 +119,6 @@ nav {
 }
 .hero-cta:hover::before { transform: translateX(0); }
 .hero-cta:hover { color: var(--dark); border-color: var(--g); }
-
 .hero-stats {
   display: flex; flex-direction: column; gap: 1px;
   border: 1px solid var(--border); background: var(--border); align-self: end;
@@ -198,56 +190,86 @@ nav {
 .diag-text { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 300; font-style: italic; color: rgba(245,245,240,0.8); line-height: 1.6; }
 .diag-text.bold { font-weight: 700; font-style: normal; color: var(--white); }
 
-/* ═══ ARCHETYPES TABS (Colors updated to Noon Green) ═══ */
-.archetypes-section { padding: 120px 6vw; background: rgba(5,13,24,0.6); backdrop-filter: blur(10px); }
-
-.tab-controls {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px;
-}
-.tab-btn {
-  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
-  padding: 24px; border-radius: 16px; text-align: left; cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(12px);
-}
-.tab-btn:hover {
-  background: rgba(255,255,255,0.04); border-color: rgba(0,200,83,0.4);
-  transform: translateY(-2px);
-}
-.tab-btn.active {
-  background: rgba(0,200,83,0.1); border-color: var(--g);
-  box-shadow: 0 8px 32px rgba(0,200,83,0.15);
-}
-.tab-title {
-  font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700;
-  color: var(--muted); margin-bottom: 8px; transition: color 0.3s;
-}
-.tab-btn.active .tab-title { color: var(--white); }
-.tab-subtitle {
-  font-family: 'Space Mono', monospace; font-size: 11px;
-  color: var(--g); letter-spacing: 1px; text-transform: uppercase;
+/* ═══ THE SYMPTOM SCANNER (NEW) ═══ */
+.scanner-section {
+  padding: 140px 6vw; background: rgba(5,13,24,0.7); backdrop-filter: blur(10px);
+  min-height: 80vh; display: flex; flex-direction: column; position: relative;
 }
 
-.tab-content-wrapper { position: relative; }
-.tab-content {
-  display: none; opacity: 0; transform: translateY(20px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+/* Prompt Phase */
+.scanner-prompt {
+  width: 100%; max-width: 900px; margin: 0 auto; text-align: center;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.tab-content.active { display: block; }
-.tab-content.show { opacity: 1; transform: translateY(0); }
+.scanner-prompt.hidden {
+  opacity: 0; transform: scale(0.95) translateY(-30px); pointer-events: none; position: absolute;
+}
+.scanner-question {
+  font-family: 'Fraunces', serif; font-size: clamp(40px, 6vw, 72px);
+  font-weight: 900; color: var(--white); margin-bottom: 80px; line-height: 1.1;
+}
 
+.symptoms-list {
+  display: flex; flex-direction: column; gap: 24px;
+}
+.symptom-btn {
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+  padding: 32px 48px; border-radius: 24px; display: flex; align-items: center; gap: 32px;
+  cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left; position: relative; overflow: hidden; backdrop-filter: blur(10px);
+}
+.symptom-btn::before {
+  content: ''; position: absolute; inset: 0; background: var(--g); opacity: 0;
+  transition: opacity 0.4s ease; z-index: 0;
+}
+.symptom-btn:hover {
+  border-color: var(--g); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,200,83,0.15);
+}
+.symptom-btn:hover::before { opacity: 0.05; }
+.symptom-btn * { position: relative; z-index: 1; }
+
+.sys-icon {
+  width: 48px; height: 48px; border-radius: 50%; border: 1px dashed var(--g);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--g); font-family: 'Space Mono', monospace; font-size: 14px; flex-shrink: 0;
+}
+.sys-text {
+  font-family: 'Fraunces', serif; font-size: clamp(24px, 3vw, 32px); font-style: italic;
+  font-weight: 300; color: var(--white);
+}
+
+/* Results Phase */
+.scanner-results {
+  opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  display: none; width: 100%;
+}
+.scanner-results.active { opacity: 1; transform: translateY(0); display: block; }
+
+.reset-scanner {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: rgba(0,200,83,0.05); color: var(--g); border: 1px solid var(--g);
+  padding: 14px 28px; border-radius: 100px; font-family: 'Space Mono', monospace;
+  font-size: 11px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
+  margin-bottom: 48px; transition: all 0.3s;
+}
+.reset-scanner:hover { background: var(--g); color: var(--dark); box-shadow: 0 0 20px rgba(0,200,83,0.3); }
+
+/* Cinematic Result Panel */
+.result-panel { display: none; opacity: 0; }
+.result-panel.active { display: block; animation: cinematicReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+@keyframes cinematicReveal {
+  0% { filter: blur(10px); transform: scale(0.97) translateY(20px); opacity: 0; }
+  100% { filter: blur(0); transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Original Archetype HTML Styles mapped to Results */
 .archetype {
   display: grid; grid-template-columns: 280px 1fr; gap: 1px;
   background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
 }
-.archetype-sidebar {
-  background: var(--mid); padding: 48px 40px; display: flex;
-  flex-direction: column; justify-content: space-between;
-}
-.archetype-index {
-  font-family: 'Fraunces', serif; font-size: 80px; font-weight: 900;
-  color: rgba(0,200,83,0.1); line-height: 1; margin-bottom: 16px;
-}
+.archetype-sidebar { background: var(--mid); padding: 48px 40px; display: flex; flex-direction: column; justify-content: space-between; }
+.archetype-index { font-family: 'Fraunces', serif; font-size: 80px; font-weight: 900; color: rgba(0,200,83,0.1); line-height: 1; margin-bottom: 16px; }
 .archetype-type { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--g); margin-bottom: 8px; }
 .archetype-title { font-family: 'Fraunces', serif; font-size: clamp(20px, 2.5vw, 28px); font-weight: 700; line-height: 1.2; color: var(--white); margin-bottom: 16px; }
 .archetype-id { font-size: 12px; color: var(--muted); font-family: 'Space Mono', monospace; }
@@ -293,12 +315,8 @@ nav {
   font-family: 'Fraunces', serif; font-size: 15vw; font-weight: 900;
   color: rgba(0,200,83,0.03); line-height: 1; pointer-events: none; user-select: none;
 }
-
 .guardrails-intro { max-width: 640px; margin-bottom: 64px; }
-.guardrails-intro p {
-  font-family: 'Fraunces', serif; font-size: clamp(22px, 3vw, 36px);
-  font-weight: 300; font-style: italic; line-height: 1.5; color: rgba(245,245,240,0.7);
-}
+.guardrails-intro p { font-family: 'Fraunces', serif; font-size: clamp(22px, 3vw, 36px); font-weight: 300; font-style: italic; line-height: 1.5; color: rgba(245,245,240,0.7); }
 .guardrails-intro p strong { font-weight: 700; font-style: normal; color: var(--white); }
 
 .guardrails-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); }
@@ -311,38 +329,23 @@ nav {
 .guardrail-body strong { color: var(--ga); font-weight: 600; }
 
 /* ═══ ASYNC REVIEW BRIDGE ═══ */
-.review-bridge {
-  padding: 0 6vw 120px; background: var(--mid); display: flex; justify-content: center;
-}
+.review-bridge { padding: 0 6vw 120px; background: var(--mid); display: flex; justify-content: center; }
 .bridge-card {
   background: rgba(0,200,83,0.05); border: 1px solid var(--border);
   border-radius: 16px; padding: 64px 40px; text-align: center;
   max-width: 600px; width: 100%; position: relative; overflow: hidden;
   backdrop-filter: blur(10px);
 }
-.bridge-tag {
-  font-family: 'Space Mono', monospace; font-size: 10px; color: var(--g);
-  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;
-}
-.bridge-title {
-  font-family: 'Fraunces', serif; font-size: 32px; font-weight: 700;
-  color: var(--white); margin-bottom: 16px;
-}
-.bridge-desc {
-  font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 40px;
-}
+.bridge-tag { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--g); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+.bridge-title { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 700; color: var(--white); margin-bottom: 16px; }
+.bridge-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 40px; }
 .bridge-btn {
   display: inline-flex; align-items: center; gap: 12px;
   background: var(--white); color: var(--dark);
-  padding: 16px 32px; border-radius: 100px;
-  font-size: 12px; font-weight: 600; letter-spacing: 1px;
-  text-transform: uppercase; text-decoration: none;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 16px 32px; border-radius: 100px; font-size: 12px; font-weight: 600; letter-spacing: 1px;
+  text-transform: uppercase; text-decoration: none; transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.bridge-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,200,83,0.25);
-}
+.bridge-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,200,83,0.25); }
 .bridge-btn .arrow { transition: transform 0.3s ease; font-family: 'Space Mono', monospace; font-weight: bold;}
 .bridge-btn:hover .arrow { transform: translateX(6px); }
 
@@ -360,8 +363,7 @@ footer {
 
 /* SCROLL ANIMATIONS */
 .fade-in {
-  opacity: 0; transform: translateY(32px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease;
   will-change: opacity, transform;
 }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
@@ -370,8 +372,8 @@ footer {
 @media (max-width: 900px) {
   .hero-content { grid-template-columns: 1fr; }
   .hero-stats { display: none; }
-  .north-star-layout, .diagnosis-grid, .tab-controls, .archetype, .three-col, .guardrails-grid { grid-template-columns: 1fr; }
-  nav { justify-content: center; } /* Center nav links on mobile since logo is gone */
+  .north-star-layout, .diagnosis-grid, .symptom-btn, .archetype, .three-col, .guardrails-grid { grid-template-columns: 1fr; }
+  nav { justify-content: center; } 
   footer { grid-template-columns: 1fr; }
   footer .footer-right { text-align: left; }
 }
@@ -387,10 +389,9 @@ footer {
 <div class="progress-bar" id="progressBar"></div>
 
 <nav>
-  <!-- Logo Removed -->
   <ul class="nav-links">
     <li><a href="#diagnosis">Diagnosis</a></li>
-    <li><a href="#archetypes">Archetypes</a></li>
+    <li><a href="#scanner">Scanner</a></li>
     <li><a href="#guardrails">Guardrails</a></li>
   </ul>
 </nav>
@@ -483,27 +484,36 @@ footer {
   </div>
 </section>
 
-<section id="archetypes" class="archetypes-section">
-  <div class="section-label">The 3 Archetypes</div>
-
-  <div class="tab-controls fade-in">
-    <button class="tab-btn active" data-target="arch1">
-      <div class="tab-title">Misguided Effort</div>
-      <div class="tab-subtitle">// Student 649073</div>
-    </button>
-    <button class="tab-btn" data-target="arch2">
-      <div class="tab-title">High Potential</div>
-      <div class="tab-subtitle">// Student 647442</div>
-    </button>
-    <button class="tab-btn" data-target="arch3">
-      <div class="tab-title">Teacher Paradox</div>
-      <div class="tab-subtitle">// Teacher 368</div>
-    </button>
+<!-- ═══ SYMPTOM SCANNER (Replaces Tabs) ═══ -->
+<section id="scanner" class="scanner-section">
+  
+  <!-- Phase 1: The Prompt -->
+  <div class="scanner-prompt fade-in" id="scannerPrompt">
+    <div class="section-label" style="justify-content: center; margin-bottom: 24px;">Diagnostic Tool</div>
+    <h2 class="scanner-question">What are you seeing?</h2>
+    
+    <div class="symptoms-list">
+      <button class="symptom-btn" data-target="arch1">
+        <div class="sys-icon">01</div>
+        <div class="sys-text">"High effort. No results."</div>
+      </button>
+      <button class="symptom-btn" data-target="arch2">
+        <div class="sys-icon">02</div>
+        <div class="sys-text">"High potential. Wrong system."</div>
+      </button>
+      <button class="symptom-btn" data-target="arch3">
+        <div class="sys-icon">03</div>
+        <div class="sys-text">"High engagement. No learning."</div>
+      </button>
+    </div>
   </div>
 
-  <div class="tab-content-wrapper fade-in">
-    
-    <div class="tab-content active show" id="arch1">
+  <!-- Phase 2: The Cinematic Results -->
+  <div class="scanner-results" id="scannerResults">
+    <button class="reset-scanner" id="resetScanner">← Scan Another Symptom</button>
+
+    <!-- Result 1 -->
+    <div class="result-panel" id="arch1">
       <div class="archetype">
         <div class="archetype-sidebar">
           <div>
@@ -554,7 +564,8 @@ footer {
       </div>
     </div>
 
-    <div class="tab-content" id="arch2">
+    <!-- Result 2 -->
+    <div class="result-panel" id="arch2">
       <div class="archetype">
         <div class="archetype-sidebar">
           <div>
@@ -606,7 +617,8 @@ footer {
       </div>
     </div>
 
-    <div class="tab-content" id="arch3">
+    <!-- Result 3 -->
+    <div class="result-panel" id="arch3">
       <div class="archetype">
         <div class="archetype-sidebar">
           <div>
@@ -744,35 +756,51 @@ const observer = new IntersectionObserver(entries => {
 
 document.querySelectorAll('.fade-in, .review-bridge').forEach(el => observer.observe(el));
 
-// Glass Tabs Logic
-const tabBtns = document.querySelectorAll('.tab-btn');
-const tabContents = document.querySelectorAll('.tab-content');
+// ═══ SCANNER LOGIC ═══
+const scannerPrompt = document.getElementById('scannerPrompt');
+const scannerResults = document.getElementById('scannerResults');
+const resetScanner = document.getElementById('resetScanner');
+const symptomBtns = document.querySelectorAll('.symptom-btn');
+const resultPanels = document.querySelectorAll('.result-panel');
 
-tabBtns.forEach(btn => {
+symptomBtns.forEach(btn => {
   btn.addEventListener('click', () => {
-    if(btn.classList.contains('active')) return; // Ignore if already active
     const target = btn.dataset.target;
     
-    // Deactivate all buttons
-    tabBtns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+    // Hide Prompt
+    scannerPrompt.classList.add('hidden');
     
-    // Smooth Fade out current tab
-    tabContents.forEach(c => {
-      if(c.classList.contains('show')) {
-        c.classList.remove('show');
-        setTimeout(() => {
-          c.classList.remove('active');
-          // Activate new tab
-          const newTab = document.getElementById(target);
-          newTab.classList.add('active');
-          // Trigger reflow for smooth animation
-          void newTab.offsetWidth;
-          newTab.classList.add('show');
-        }, 400); // Matches CSS transition time
-      }
-    });
+    // Show Results after fade out
+    setTimeout(() => {
+      scannerPrompt.style.display = 'none';
+      scannerResults.classList.add('active');
+      
+      // Activate target panel
+      resultPanels.forEach(p => p.classList.remove('active'));
+      document.getElementById(target).classList.add('active');
+      
+      // Scroll to top of scanner section smoothly
+      document.getElementById('scanner').scrollIntoView({ behavior: 'smooth' });
+    }, 400);
   });
+});
+
+resetScanner.addEventListener('click', () => {
+  // Hide Results
+  scannerResults.classList.remove('active');
+  
+  setTimeout(() => {
+    resultPanels.forEach(p => p.classList.remove('active'));
+    scannerPrompt.style.display = 'block';
+    
+    // Small delay to allow display to register before removing hidden class
+    setTimeout(() => {
+      scannerPrompt.classList.remove('hidden');
+    }, 50);
+    
+    // Scroll back slightly to prompt
+    document.getElementById('scanner').scrollIntoView({ behavior: 'smooth' });
+  }, 500);
 });
 </script>
 
