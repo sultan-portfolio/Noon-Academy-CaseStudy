@@ -194,9 +194,10 @@ nav {
 .scanner-section {
   padding: 140px 6vw; background: rgba(5,13,24,0.7); backdrop-filter: blur(10px);
   min-height: 80vh; display: flex; flex-direction: column; position: relative;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
 }
 
-/* Prompt Phase */
+/* Phase 1: Prompt */
 .scanner-prompt {
   width: 100%; max-width: 900px; margin: 0 auto; text-align: center;
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -207,6 +208,7 @@ nav {
 .scanner-question {
   font-family: 'Fraunces', serif; font-size: clamp(40px, 6vw, 72px);
   font-weight: 900; color: var(--white); margin-bottom: 80px; line-height: 1.1;
+  text-shadow: 0 0 40px rgba(255,255,255,0.1);
 }
 
 .symptoms-list {
@@ -234,11 +236,11 @@ nav {
   color: var(--g); font-family: 'Space Mono', monospace; font-size: 14px; flex-shrink: 0;
 }
 .sys-text {
-  font-family: 'Fraunces', serif; font-size: clamp(24px, 3vw, 32px); font-style: italic;
+  font-family: 'Fraunces', serif; font-size: clamp(20px, 2.5vw, 28px); font-style: italic;
   font-weight: 300; color: var(--white);
 }
 
-/* Results Phase */
+/* Phase 2: Results */
 .scanner-results {
   opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   display: none; width: 100%;
@@ -247,12 +249,12 @@ nav {
 
 .reset-scanner {
   display: inline-flex; align-items: center; gap: 12px;
-  background: rgba(0,200,83,0.05); color: var(--g); border: 1px solid var(--g);
+  background: rgba(0,200,83,0.05); color: var(--g); border: 1px solid var(--border);
   padding: 14px 28px; border-radius: 100px; font-family: 'Space Mono', monospace;
   font-size: 11px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
   margin-bottom: 48px; transition: all 0.3s;
 }
-.reset-scanner:hover { background: var(--g); color: var(--dark); box-shadow: 0 0 20px rgba(0,200,83,0.3); }
+.reset-scanner:hover { background: var(--g); color: var(--dark); border-color: var(--g); box-shadow: 0 0 20px rgba(0,200,83,0.3); }
 
 /* Cinematic Result Panel */
 .result-panel { display: none; opacity: 0; }
@@ -263,7 +265,7 @@ nav {
   100% { filter: blur(0); transform: scale(1) translateY(0); opacity: 1; }
 }
 
-/* Original Archetype HTML Styles mapped to Results */
+/* Archetype Layout (Hybrid: Cloud's Visuals + Sultan's Words) */
 .archetype {
   display: grid; grid-template-columns: 280px 1fr; gap: 1px;
   background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
@@ -277,18 +279,25 @@ nav {
 .risk-badge {
   display: inline-block; padding: 6px 14px; font-size: 10px; font-weight: 700;
   letter-spacing: 1.5px; text-transform: uppercase; border: 1px solid;
-  font-family: 'Space Mono', monospace; margin-top: 24px;
+  font-family: 'Space Mono', monospace; margin-top: 24px; border-radius: 100px;
 }
-.risk-red { border-color: #FF5252; color: #FF5252; }
-.risk-green { border-color: var(--g); color: var(--g); }
-.risk-amber { border-color: #FFB300; color: #FFB300; }
+.risk-red { border-color: #FF5252; color: #FF5252; background: rgba(255,82,82,0.1); }
+.risk-green { border-color: var(--g); color: var(--g); background: rgba(0,200,83,0.1); }
+.risk-amber { border-color: #FFB300; color: #FFB300; background: rgba(255,179,0,0.1); }
 
 .archetype-main { background: var(--dark); padding: 48px; display: grid; grid-template-rows: 1fr auto auto; gap: 40px; }
 .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
 .col-head {
   font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px;
-  text-transform: uppercase; color: var(--g); margin-bottom: 16px;
+  text-transform: uppercase; color: var(--g); margin-bottom: 24px;
   padding-bottom: 12px; border-bottom: 1px solid var(--border);
+}
+
+/* Strategic Actions (Restored your powerful words) */
+.action-item { margin-bottom: 24px; }
+.action-title {
+  display: block; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+  color: var(--white); margin-bottom: 8px;
 }
 .col-body { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .col-body li { font-size: 13px; color: var(--muted); line-height: 1.65; padding-left: 14px; position: relative; }
@@ -296,7 +305,7 @@ nav {
 
 .archetype-metrics-bar { display: flex; gap: 32px; padding-top: 24px; border-top: 1px solid var(--border); flex-wrap: wrap; }
 .metric-chip { display: flex; flex-direction: column; gap: 4px; }
-.chip-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+.chip-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--g); }
 .chip-value { font-size: 13px; font-weight: 600; color: var(--white); }
 
 .archetype-bonus-bar {
@@ -373,6 +382,8 @@ footer {
   .hero-content { grid-template-columns: 1fr; }
   .hero-stats { display: none; }
   .north-star-layout, .diagnosis-grid, .symptom-btn, .archetype, .three-col, .guardrails-grid { grid-template-columns: 1fr; }
+  .archetype-sidebar { padding: 32px 24px; }
+  .archetype-main { padding: 32px 24px; }
   nav { justify-content: center; } 
   footer { grid-template-columns: 1fr; }
   footer .footer-right { text-align: left; }
@@ -391,7 +402,7 @@ footer {
 <nav>
   <ul class="nav-links">
     <li><a href="#diagnosis">Diagnosis</a></li>
-    <li><a href="#scanner">Scanner</a></li>
+    <li><a href="#scanner">Diagnostic Scanner</a></li>
     <li><a href="#guardrails">Guardrails</a></li>
   </ul>
 </nav>
@@ -484,12 +495,12 @@ footer {
   </div>
 </section>
 
-<!-- ═══ SYMPTOM SCANNER (Replaces Tabs) ═══ -->
+<!-- ═══ THE SYMPTOM SCANNER ═══ -->
 <section id="scanner" class="scanner-section">
   
   <!-- Phase 1: The Prompt -->
   <div class="scanner-prompt fade-in" id="scannerPrompt">
-    <div class="section-label" style="justify-content: center; margin-bottom: 24px;">Diagnostic Tool</div>
+    <div class="section-label" style="justify-content: center; margin-bottom: 24px; color: var(--muted);">Interactive Diagnostic Tool</div>
     <h2 class="scanner-question">What are you seeing?</h2>
     
     <div class="symptoms-list">
@@ -544,21 +555,37 @@ footer {
             </div>
             <div>
               <div class="col-head">What I'll Do Tomorrow</div>
-              <ul class="col-body">
-                <li>Flag: Attempts &gt; 1000 and Accuracy &lt; 40%</li>
-                <li>Auto-categorize as "At Risk: Misguided Effort"</li>
-                <li>Teacher visibility layer highlighting the Effort vs. Outcome mismatch</li>
-                <li>If status persists 7 days: 15-minute diagnostic session</li>
-              </ul>
+              <!-- REINSTATED POWERFUL HEADINGS -->
+              <div class="action-item">
+                <span class="action-title">1- Automated Triggered Alert (Fast, low-cost):</span>
+                <ul class="col-body">
+                  <li>Detection Rule: Flag any student with Attempts > 1000 & Accuracy < 40%</li>
+                  <li>Auto-categorize as “At Risk: Misguided Effort”</li>
+                </ul>
+              </div>
+              <div class="action-item">
+                <span class="action-title">2- Teacher Visibility Layer:</span>
+                <ul class="col-body">
+                  <li>A simplified dashboard highlighting the Effort vs. Outcome mismatch</li>
+                  <li>Alert the teacher without adding significant operational load</li>
+                </ul>
+              </div>
+              <div class="action-item">
+                <span class="action-title">3- Human Escalation (For extreme cases):</span>
+                <ul class="col-body">
+                  <li>If the status persists for 7 days</li>
+                  <li>Schedule a 15-minute session for struggling students to diagnose error type</li>
+                </ul>
+              </div>
             </div>
           </div>
           <div class="archetype-metrics-bar">
-            <div class="metric-chip"><span class="chip-label">Target</span><span class="chip-value">Accuracy 25% to 40% within 10-14 days</span></div>
+            <div class="metric-chip"><span class="chip-label">Target</span><span class="chip-value">Increase Accuracy 25% → 40% within 10–14 days</span></div>
             <div class="metric-chip"><span class="chip-label">Secondary</span><span class="chip-value">Reduce unproductive attempts by 30%</span></div>
-            <div class="metric-chip"><span class="chip-label">Then</span><span class="chip-value">Recalibrate Trust (Expectation vs. Perception)</span></div>
+            <div class="metric-chip"><span class="chip-label">Outcome</span><span class="chip-value">Recalibrate Trust (Expectation vs Perception)</span></div>
           </div>
           <div class="archetype-bonus-bar">
-            <strong>Psychological Layer</strong> &nbsp; Likely driven by Learning Helplessness and Parental Pressure (The Ambitious Father Syndrome).
+            <strong>Psychological Layer</strong> &nbsp; It’s likely driven by Learning Helplessness and Parental Pressure (The Ambitious Father syndrome).
           </div>
         </div>
       </div>
@@ -597,21 +624,37 @@ footer {
             </div>
             <div>
               <div class="col-head">What I'll Do Tomorrow</div>
-              <ul class="col-body">
-                <li>Add 2-3 onboarding questions: Explorative vs. Structured Learner</li>
-                <li>Behavioral override within 7 days based on actual in-app data</li>
-                <li>Adaptive experience: reduce/increase tasks based on learning type</li>
-                <li>Redefine "Completion" as Engagement + Learning Outcomes</li>
-              </ul>
+              <!-- REINSTATED POWERFUL HEADINGS -->
+              <div class="action-item">
+                <span class="action-title">1- Lightweight Segmentation:</span>
+                <ul class="col-body">
+                  <li>Add 2–3 onboarding questions: Explorative vs. Structured Learner</li>
+                </ul>
+              </div>
+              <div class="action-item">
+                <span class="action-title">2- Adaptive Experience (Low cost):</span>
+                <ul class="col-body">
+                  <li>Reduce/Increase mandatory tasks</li>
+                  <li>Reduce/Increase Challenges and Peer Interaction</li>
+                  <li>Disable/Enable Gamified Progression</li>
+                </ul>
+              </div>
+              <div class="action-item">
+                <span class="action-title">3- Smart Completion Redefinition:</span>
+                <ul class="col-body">
+                  <li>Redefine “Completion” beyond just ticking off tasks</li>
+                  <li>Measure it as: Engagement + Learning Outcomes</li>
+                </ul>
+              </div>
             </div>
           </div>
           <div class="archetype-metrics-bar">
-            <div class="metric-chip"><span class="chip-label">Target</span><span class="chip-value">Completion Rate 30% to 50%</span></div>
-            <div class="metric-chip"><span class="chip-label">Maintain</span><span class="chip-value">Growth above 50%</span></div>
-            <div class="metric-chip"><span class="chip-label">Proxy</span><span class="chip-value">Sustained attendance = Retention + Revenue</span></div>
+            <div class="metric-chip"><span class="chip-label">Target</span><span class="chip-value">Raise Completion Rate from 30% → 50%</span></div>
+            <div class="metric-chip"><span class="chip-label">Maintain</span><span class="chip-value">Growth > 50%</span></div>
+            <div class="metric-chip"><span class="chip-label">Proxy</span><span class="chip-value">Increase Retention & Revenue (Sustained attendance)</span></div>
           </div>
           <div class="archetype-bonus-bar">
-            <strong>Psychological Layer</strong> &nbsp; Protege Effect: learning efficacy increases when students explain and teach what they learn with peers. Cognitive Fit: students will perform at their best in their preferred learning environment.
+            <strong>Psychological Layer</strong> &nbsp; Protégé Effect: learning efficacy increases when students explain/teach what they learn with peers. Cognitive Fit: students boom in preferred environments.
           </div>
         </div>
       </div>
@@ -649,18 +692,33 @@ footer {
             </div>
             <div>
               <div class="col-head">What I'll Do Tomorrow</div>
-              <ul class="col-body">
-                <li>Tie teacher evaluations to Engagement + Learning Outcomes combined</li>
-                <li>Embed 2-3 checkpoints during the session, not just at the end</li>
-                <li>Exit Ticket threshold: 70% minimum</li>
-                <li>If below threshold: auto-trigger review of lesson material</li>
-              </ul>
+              <!-- REINSTATED POWERFUL HEADINGS -->
+              <div class="action-item">
+                <span class="action-title">1- Rebalancing Incentives:</span>
+                <ul class="col-body">
+                  <li>Tie teacher evaluations to a combined score: Engagement + Outcomes</li>
+                </ul>
+              </div>
+              <div class="action-item">
+                <span class="action-title">2- Micro-Assessment Injection:</span>
+                <ul class="col-body">
+                  <li>Embed 2–3 checkpoints during the session</li>
+                  <li>Simple “Best Achievers” scoreboard</li>
+                </ul>
+              </div>
+              <div class="action-item">
+                <span class="action-title">3- Exit Ticket Threshold:</span>
+                <ul class="col-body">
+                  <li>Set a minimum acceptable threshold at 70%</li>
+                  <li>If scores fall below: Trigger automated review of lesson material</li>
+                </ul>
+              </div>
             </div>
           </div>
           <div class="archetype-metrics-bar">
-            <div class="metric-chip"><span class="chip-label">Target</span><span class="chip-value">Exit Tickets 58% to 70%+</span></div>
+            <div class="metric-chip"><span class="chip-label">Target</span><span class="chip-value">Raise Exit Ticket scores from 58% → 70%+</span></div>
             <div class="metric-chip"><span class="chip-label">Maintain</span><span class="chip-value">Engagement above 85%</span></div>
-            <div class="metric-chip"><span class="chip-label">Watch</span><span class="chip-value">Trust correlated to actual outcome</span></div>
+            <div class="metric-chip"><span class="chip-label">Watch</span><span class="chip-value">Compare trust directly to the outcome</span></div>
           </div>
           <div class="archetype-bonus-bar">
             <strong>Psychological Layer</strong> &nbsp; Peak-End Rule: the facilitator focuses on the "Peak" with joy, but leaves the "End" with unexpected results.
@@ -672,6 +730,7 @@ footer {
   </div>
 </section>
 
+<!-- ═══ GUARDRAILS ═══ -->
 <section id="guardrails" class="guardrails-section">
   <div class="section-label">Risk Mitigation</div>
   <div class="guardrails-intro fade-in">
@@ -756,7 +815,7 @@ const observer = new IntersectionObserver(entries => {
 
 document.querySelectorAll('.fade-in, .review-bridge').forEach(el => observer.observe(el));
 
-// ═══ SCANNER LOGIC ═══
+// ═══ SYMPTOM SCANNER LOGIC ═══
 const scannerPrompt = document.getElementById('scannerPrompt');
 const scannerResults = document.getElementById('scannerResults');
 const resetScanner = document.getElementById('resetScanner');
@@ -767,21 +826,21 @@ symptomBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     const target = btn.dataset.target;
     
-    // Hide Prompt
+    // Hide Prompt Smoothly
     scannerPrompt.classList.add('hidden');
     
-    // Show Results after fade out
+    // Wait for prompt to fade, then show results
     setTimeout(() => {
       scannerPrompt.style.display = 'none';
       scannerResults.classList.add('active');
       
-      // Activate target panel
+      // Activate specific archetype
       resultPanels.forEach(p => p.classList.remove('active'));
       document.getElementById(target).classList.add('active');
       
-      // Scroll to top of scanner section smoothly
-      document.getElementById('scanner').scrollIntoView({ behavior: 'smooth' });
-    }, 400);
+      // Scroll seamlessly to the top of the scanner
+      document.getElementById('scanner').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 500); // Wait 0.5s for transition
   });
 });
 
@@ -793,13 +852,13 @@ resetScanner.addEventListener('click', () => {
     resultPanels.forEach(p => p.classList.remove('active'));
     scannerPrompt.style.display = 'block';
     
-    // Small delay to allow display to register before removing hidden class
+    // Tiny delay to allow block to register before removing 'hidden'
     setTimeout(() => {
       scannerPrompt.classList.remove('hidden');
     }, 50);
     
-    // Scroll back slightly to prompt
-    document.getElementById('scanner').scrollIntoView({ behavior: 'smooth' });
+    // Scroll back to the prompt smoothly
+    document.getElementById('scanner').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, 500);
 });
 </script>
